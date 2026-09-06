@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Native Binaries (compiled via bin/build.sh)
+bin/vision_ocr
+bin/render_text
+bin/test_ocr
+
+# Video & Media Artifacts
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# Temporary and Debug Frames
+/preview_frames/
+tmp_*
+tmp/
+debug_*
+debug_frames/
+sample_inspect/
+timeline_frames/
+frames/
+clean_preview_frames/
+uploads/*
+!uploads/.gitkeep
+preview_frames/
+test_*.jpg
+test_*.png
+test_*.txt
+timeline_ocr.txt
+ocr_results.txt
+scenes.txt
+
+# System & IDE
+.DS_Store
+*.log
+.vscode/
+.idea/

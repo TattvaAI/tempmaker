@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudioMotion • Universal Video Template Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <h1>StudioMotion</h1>
+      </div>
+      <span class="badge">Universal Video Template Maker</span>
+    </div>
+
+    <div class="header-center">
+      <div class="template-selector-wrap">
+        <label for="templateSelect">Template:</label>
+        <select id="templateSelect" class="template-select">
+          <option value="">Loading templates...</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn btn-secondary" id="btnUploadModal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Create Template from Video
+      </button>
+      <button class="btn btn-secondary" id="btnSave">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save
+      </button>
+      <button class="btn btn-primary" id="btnRender">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Export Final Video
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-layout">
+    <!-- Left Panel: Scene Navigation & Dynamic Form Fields -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2 id="templateTitle">Loading...</h2>
+        <p id="templateSubtitle" class="text-muted">Select a scene to customize its text.</p>
+      </div>
+
+      <!-- Scenes Horizontal Scroller / Tabs -->
+      <div class="scenes-nav-wrapper">
+        <div class="scenes-tabs" id="scenesTabs">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Dynamic Fields for Selected Scene -->
+      <div class="fields-container" id="fieldsContainer">
+        <div class="empty-state">
+          <p>Select a scene above to edit its text elements.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Panel: Canvas & Player -->
+    <section class="preview-panel">
+      <div class="preview-toolbar">
+        <div class="preview-mode-switch">
+          <button class="mode-btn active" id="btnModePreview">Live Frame Preview</button>
+          <button class="mode-btn" id="btnModeVideo">Video Player</button>
+        </div>
+        <div class="preview-info" id="previewMeta">Frame 0</div>
+        <div class="toolbar-right">
+          <a class="btn btn-sm btn-outline" id="btnDownload" href="#" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download MP4
+          </a>
+        </div>
+      </div>
+
+      <div class="preview-viewport">
+        <!-- Live Frame Canvas -->
+        <div class="frame-view" id="frameView">
+          <img id="previewImage" src="" alt="Frame Preview">
+          <div class="preview-loader" id="previewLoader">
+            <div class="spinner"></div>
+          </div>
+        </div>
+
+        <!-- Video Player View -->
+        <div class="video-view hidden" id="videoView">
+          <video id="videoPlayer" controls playsinline>
+            <source id="videoSource" src="" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+
+      <!-- Timeline Scrubber -->
+      <div class="timeline-bar">
+        <span class="time-label" id="timeCurrent">00:00</span>
+        <input type="range" class="scrubber" id="timelineScrubber" min="0" max="1500" value="0" step="1">
+        <span class="time-label" id="timeTotal">00:52</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Upload Modal -->
+  <div class="modal-backdrop hidden" id="uploadModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create Template from Any Video</h3>
+        <button class="modal-close" id="btnCloseUploadModal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          Drop any animated announcement, invitation, or motion graphics video. Our AI engine will automatically detect scene boundaries, extract text with Apple Vision OCR, erase original text via inpainting, and generate an editable template.
+        </p>
+
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="videoFileInput" accept="video/mp4,video/quicktime,video/mov" class="file-input">
+          <div class="dropzone-content">
+            <div class="upload-icon">🎬</div>
+            <h4>Drag & drop video here, or <span class="browse-link">browse files</span></h4>
+            <p class="text-muted">Supports MP4, MOV (up to 500 MB)</p>
+          </div>
+        </div>
+
+        <!-- Processing Steps Progress -->
+        <div class="pipeline-progress hidden" id="pipelineProgress">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+          <div class="progress-status">
+            <span id="progressStepText">Initializing video analyzer...</span>
+            <span id="progressPercent">0%</span>
+          </div>
+
+          <ul class="steps-checklist">
+            <li id="step1" class="step-item">
+              <span class="step-icon">1</span>
+              <span>Scene Cut & Keyframe Detection</span>
+            </li>
+            <li id="step2" class="step-item">
+              <span class="step-icon">2</span>
+              <span>Native Vision OCR Text Recognition</span>
+            </li>
+            <li id="step3" class="step-item">
+              <span class="step-icon">3</span>
+              <span>Parallel Background Text Inpainting</span>
+            </li>
+            <li id="step4" class="step-item">
+              <span class="step-icon">4</span>
+              <span>Dynamic Template Schema Generation</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelUpload">Cancel</button>
+        <button class="btn btn-primary" id="btnStartUpload" disabled>Start Template Generation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

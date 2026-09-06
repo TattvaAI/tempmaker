@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation Video Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f1117;
+      --bg-card: rgba(26, 29, 41, 0.85);
+      --bg-input: #151824;
+      --border-color: rgba(212, 175, 55, 0.25);
+      --gold-primary: #e6ca65;
+      --gold-accent: #f5b041;
+      --text-main: #f0f2f5;
+      --text-muted: #9ba3b4;
+      --crimson: #e0245e;
+      --green-success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(230, 202, 101, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(224, 36, 94, 0.05) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(15, 17, 23, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .logo-area h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #fff 0%, var(--gold-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-area span {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+      color: #0f1117;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+    }
+    .btn-gold:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .btn-download {
+      background: #2563eb;
+      color: #fff;
+    }
+    .btn-download:hover {
+      background: #1d4ed8;
+    }
+
+    .main-container {
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 24px;
+      padding: 24px 32px;
+      flex: 1;
+      max-width: 1600px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1100px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Sidebar */
+    .editor-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      height: calc(100vh - 120px);
+      max-height: calc(100vh - 120px);
+      overflow: hidden;
+    }
+
+    .preset-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+
+    .preset-bar label {
+      font-size: 13px;
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
+
+    .preset-select {
+      flex: 1;
+      background: var(--bg-input);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    .tabs-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      padding: 7px 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .tab-btn.active {
+      background: rgba(212, 175, 55, 0.2);
+      color: var(--gold-primary);
+      border-color: var(--gold-accent);
+      box-shadow: 0 0 10px rgba(245, 176, 65, 0.25);
+    }
+
+    #formFieldsContainer {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 6px;
+      scrollbar-width: thin;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .form-input {
+      background: var(--bg-input);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold-accent);
+      box-shadow: 0 0 0 2px rgba(245, 176, 65, 0.2);
+    }
+
+    /* Right Preview Section */
+    .preview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      max-height: calc(100vh - 120px);
+    }
+
+    .view-switch {
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .switch-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .switch-btn.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .display-area {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      min-height: 480px;
+    }
+
+    .preview-img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .video-player {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .preview-loading {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--gold-primary);
+      display: none;
+    }
+
+    /* Status Bar & Modal */
+    .render-banner {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-primary), var(--gold-accent));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .info-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-success);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-area">
+      <h1>💍 Wedding Invitation Studio</h1>
+      <span>1080×1920 Full HD Video • Multi-Scene Typography Customizer</span>
+    </div>
+    <div class="header-actions">
+      <div class="info-badge">
+        <span class="status-dot"></span>
+        <span id="statusText">Ready</span>
+      </div>
+      <button class="btn btn-gold" id="btnRender" onclick="startRender()">
+        ⚡ Render Video
+      </button>
+      <a href="/video/custom_invitation.mp4" download="custom_invitation.mp4" class="btn btn-download" id="btnDownload">
+        ⬇️ Download MP4
+      </a>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Editor Column -->
+    <div class="editor-card">
+      <div class="preset-bar">
+        <label>Quick Presets:</label>
+        <select class="preset-select" id="presetSelect" onchange="applyPreset(this.value)">
+          <option value="mohit_sneha">Mohit & Sneha (Current Default)</option>
+          <option value="aarav_diya">Aarav & Diya (Mumbai)</option>
+          <option value="kabir_ananya">Kabir & Ananya (Jaipur)</option>
+        </select>
+      </div>
+
+      <div class="tabs-nav" id="sceneTabs">
+        <button class="tab-btn active" onclick="switchScene('2', this)">Monogram</button>
+        <button class="tab-btn" onclick="switchScene('3', this)">Announcement</button>
+        <button class="tab-btn" onclick="switchScene('4', this)">Invitation</button>
+        <button class="tab-btn" onclick="switchScene('5', this)">Haldi</button>
+        <button class="tab-btn" onclick="switchScene('6', this)">Mehendi</button>
+        <button class="tab-btn" onclick="switchScene('7', this)">Sangeet</button>
+        <button class="tab-btn" onclick="switchScene('8', this)">Mandha</button>
+        <button class="tab-btn" onclick="switchScene('9', this)">Wedding</button>
+        <button class="tab-btn" onclick="switchScene('10', this)">Save The Date</button>
+      </div>
+
+      <div id="formFieldsContainer">
+        <!-- Dynamically injected fields -->
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: auto;">
+        <button class="btn btn-secondary" style="flex: 1;" onclick="refreshPreview()">
+          👁️ Update Preview
+        </button>
+        <button class="btn btn-gold" style="flex: 1;" onclick="saveConfig()">
+          💾 Save Changes
+        </button>
+      </div>
+
+      <div class="render-banner" id="renderBanner" style="display: none;">
+        <div style="width: 100%;">
+          <div style="display: flex; justify-content: space-between;">
+            <strong id="bannerMsg">Rendering in progress...</strong>
+            <span id="bannerPct">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="bannerProgress"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview & Player Column -->
+    <div class="preview-card">
+      <div class="view-switch">
+        <button class="switch-btn active" id="tabPreview" onclick="switchView('preview')">
+          🖼️ Live Scene Preview
+        </button>
+        <button class="switch-btn" id="tabVideo" onclick="switchView('video')">
+          🎬 Full Video Player
+        </button>
+      </div>
+
+      <div class="display-area">
+        <div class="preview-loading" id="previewLoader">Rendering Preview...</div>
+        
+        <!-- Frame Preview -->
+        <img id="previewImage" class="preview-img" src="/api/preview?scene=2" alt="Scene Preview">
+
+        <!-- Full Video Player -->
+        <video id="videoPlayer" class="video-player" controls preload="metadata" style="display: none;">
+          <source src="/video/custom_invitation.mp4" type="video/mp4">
+          Your browser does not support video tag.
+        </video>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let currentConfig = {};
+    let currentScene = '2';
+    let currentView = 'preview';
+    let isRendering = false;
+
+    // Presets
+    const PRESETS = {
+      mohit_sneha: null, // will hold default from server
+      aarav_diya: {
+        scene_2_monogram: { initials: "AD" },
+        scene_3_announcement: {
+          monogram: "AD",
+          couple_names: "Aarav & Diya",
+          subtext: "are getting married on ..",
+          date: "12th November 2026"
+        },
+        scene_4_invitation: {
+          shloka: "॥ श्री गणेशाय नमः ॥",
+          header_line1: "Together with their families",
+          header_line2: "cordially invite you to celebrate the wedding of",
+          groom_name: "Aarav",
+          conjunction: "With",
+          bride_name: "Diya",
+          residence_label: "Residence:",
+          address_line1: "#12, Green Park Avenue,",
+          address_line2: "New Delhi"
+        },
+        scene_5_haldi: {
+          header: "You are invited to be a part of",
+          title: "Haldi Ceremony",
+          on_text: "on",
+          date: "10 November 2026",
+          time: "10:00 AM Onwards",
+          venue_label: "Venue-",
+          venue_name: "The Grand Maratha",
+          address_line1: "JW Marriott Grounds, Juhu,",
+          address_line2: "Mumbai"
+        },
+        scene_6_mehendi: {
+          header: "You are invited to be a part of",
+          title_line1: "Mehendi &",
+          title_line2: "Sufi Night",
+          of_text: "of",
+          bride_name: "Diya",
+          on_text: "on",
+          date: "11 November 2026",
+          time: "5:00 PM Onwards",
+          venue_name: "The Grand Maratha",
+          address_line1: "JW Marriott Grounds,",
+          address_line2: "Mumbai"
+        },
+        scene_7_sangeet: {
+          header_line1: "YOU ARE CORDIALLY INVITED TO",
+          header_line2: "JOIN US IN CELEBRATING THE",
+          event_name_hindi: "संगीत",
+          sub_header: "OF OUR BEAUTIFUL BRIDE",
+          bride_name: "Diya",
+          date: "ON 11 NOVEMBER 2026",
+          venue_label: "VENUE:",
+          venue_name: "THE LEELA PALACE"
+        },
+        scene_8_mandha: {
+          title: "Mandha Ceremony",
+          on_text: "on",
+          date: "11th November 2026",
+          time: "11:30 AM Onwards",
+          venue_label: "Venue",
+          venue_name: "The Grand Maratha, Mumbai",
+          address: "JW Marriott Grounds, Juhu, Mumbai"
+        },
+        scene_9_wedding: {
+          title: "Wedding Ceremony",
+          on_text: "on",
+          date: "12th November 2026",
+          time: "6:00 P.M. Onwards",
+          venue_label: "Venue",
+          venue_name: "Taj Mahal Palace, Mumbai",
+          address: "Apollo Bunder, Colaba, Mumbai"
+        },
+        scene_10_closing: {
+          title: "Save The Date",
+          date: "12th November 2026",
+          rsvp_label: "RSVP",
+          rsvp_text: "Sharma & Singhania Families"
+        }
+      },
+      kabir_ananya: {
+        scene_2_monogram: { initials: "KA" },
+        scene_3_announcement: {
+          monogram: "KA",
+          couple_names: "Kabir & Ananya",
+          subtext: "are getting married on ..",
+          date: "14th December 2026"
+        },
+        scene_4_invitation: {
+          shloka: "॥ श्री गणेशाय नमः ॥",
+          header_line1: "Together with their families",
+          header_line2: "cordially invite you to celebrate the wedding of",
+          groom_name: "Kabir",
+          conjunction: "With",
+          bride_name: "Ananya",
+          residence_label: "Residence:",
+          address_line1: "#45, Civil Lines,",
+          address_line2: "Jaipur, Rajasthan"
+        },
+        scene_5_haldi: {
+          header: "You are invited to be a part of",
+          title: "Haldi Ceremony",
+          on_text: "on",
+          date: "12 December 2026",
+          time: "11:00 AM Onwards",
+          venue_label: "Venue-",
+          venue_name: "Rambagh Palace",
+          address_line1: "Bhawani Singh Road,",
+          address_line2: "Jaipur, Rajasthan"
+        },
+        scene_6_mehendi: {
+          header: "You are invited to be a part of",
+          title_line1: "Mehendi &",
+          title_line2: "Sufi Night",
+          of_text: "of",
+          bride_name: "Ananya",
+          on_text: "on",
+          date: "13 December 2026",
+          time: "6:00 PM Onwards",
+          venue_name: "Rambagh Palace",
+          address_line1: "Bhawani Singh Road,",
+          address_line2: "Jaipur, Rajasthan"
+        },
+        scene_7_sangeet: {
+          header_line1: "YOU ARE CORDIALLY INVITED TO",
+          header_line2: "JOIN US IN CELEBRATING THE",
+          event_name_hindi: "संगीत",
+          sub_header: "OF OUR BEAUTIFUL BRIDE",
+          bride_name: "Ananya",
+          date: "ON 13 DECEMBER 2026",
+          venue_label: "VENUE:",
+          venue_name: "RAMBAGH PALACE"
+        },
+        scene_8_mandha: {
+          title: "Mandha Ceremony",
+          on_text: "on",
+          date: "13th December 2026",
+          time: "11:30 AM Onwards",
+          venue_label: "Venue",
+          venue_name: "Rambagh Palace, Jaipur",
+          address: "Bhawani Singh Road, Jaipur"
+        },
+        scene_9_wedding: {
+          title: "Wedding Ceremony",
+          on_text: "on",
+          date: "14th December 2026",
+          time: "7:00 P.M. Onwards",
+          venue_label: "Venue",
+          venue_name: "Fairmont Hotel, Jaipur",
+          address: "2 Riico Kukas, Jaipur, Rajasthan"
+        },
+        scene_10_closing: {
+          title: "Save The Date",
+          date: "14th December 2026",
+          rsvp_label: "RSVP",
+          rsvp_text: "Rathore & Verma Families"
+        }
+      }
+    };
+
+    async function init() {
+      try {
+        const res = await fetch('/api/config');
+        currentConfig = await res.json();
+        PRESETS.mohit_sneha = JSON.parse(JSON.stringify(currentConfig));
+        renderSceneForm(currentScene);
+        refreshPreview();
+        checkStatus();
+      } catch (err) {
+        console.error("Init failed:", err);
+      }
+    }
+
+    function switchScene(sceneNum, btn) {
+      currentScene = sceneNum;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderSceneForm(sceneNum);
+      if (currentView === 'preview') {
+        refreshPreview();
+      }
+    }
+
+    function switchView(view) {
+      currentView = view;
+      const previewImg = document.getElementById('previewImage');
+      const videoPlayer = document.getElementById('videoPlayer');
+      const tabPreview = document.getElementById('tabPreview');
+      const tabVideo = document.getElementById('tabVideo');
+
+      if (view === 'preview') {
+        previewImg.style.display = 'block';
+        videoPlayer.style.display = 'none';
+        videoPlayer.pause();
+        tabPreview.classList.add('active');
+        tabVideo.classList.remove('active');
+        refreshPreview();
+      } else {
+        previewImg.style.display = 'none';
+        videoPlayer.style.display = 'block';
+        tabPreview.classList.remove('active');
+        tabVideo.classList.add('active');
+        // reload video source
+        videoPlayer.src = '/video/custom_invitation.mp4?t=' + Date.now();
+        videoPlayer.load();
+      }
+    }
+
+    function renderSceneForm(sceneNum) {
+      const container = document.getElementById('formFieldsContainer');
+      container.innerHTML = '';
+
+      let sectionKey = '';
+      if (sceneNum === '2') sectionKey = 'scene_2_monogram';
+      else if (sceneNum === '3') sectionKey = 'scene_3_announcement';
+      else if (sceneNum === '4') sectionKey = 'scene_4_invitation';
+      else if (sceneNum === '5') sectionKey = 'scene_5_haldi';
+      else if (sceneNum === '6') sectionKey = 'scene_6_mehendi';
+      else if (sceneNum === '7') sectionKey = 'scene_7_sangeet';
+      else if (sceneNum === '8') sectionKey = 'scene_8_mandha';
+      else if (sceneNum === '9') sectionKey = 'scene_9_wedding';
+      else if (sceneNum === '10') sectionKey = 'scene_10_closing';
+
+      const data = currentConfig[sectionKey] || {};
+
+      for (const [key, value] of Object.entries(data)) {
+        const group = document.createElement('div');
+        group.className = 'form-group';
+        
+        const label = document.createElement('label');
+        label.innerText = key.replace(/_/g, ' ');
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-input';
+        input.value = value;
+        input.dataset.section = sectionKey;
+        input.dataset.key = key;
+
+        input.addEventListener('input', (e) => {
+          currentConfig[sectionKey][key] = e.target.value;
+          debouncePreview();
+        });
+
+        group.appendChild(label);
+        group.appendChild(input);
+        container.appendChild(group);
+      }
+    }
+
+    let debounceTimer = null;
+    function debouncePreview() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        refreshPreviewCustom();
+      }, 350);
+    }
+
+    async function refreshPreview() {
+      const loader = document.getElementById('previewLoader');
+      loader.style.display = 'block';
+      const img = document.getElementById('previewImage');
+      img.src = `/api/preview?scene=${currentScene}&t=${Date.now()}`;
+      img.onload = () => { loader.style.display = 'none'; };
+    }
+
+    async function refreshPreviewCustom() {
+      const loader = document.getElementById('previewLoader');
+      loader.style.display = 'block';
+      try {
+        const res = await fetch('/api/preview_custom', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scene: currentScene, config: currentConfig })
+        });
+        const blob = await res.blob();
+        const img = document.getElementById('previewImage');
+        img.src = URL.createObjectURL(blob);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        loader.style.display = 'none';
+      }
+    }
+
+    async function saveConfig() {
+      try {
+        const res = await fetch('/api/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentConfig)
+        });
+        alert('Configuration saved successfully! Click "Render Video" to create the final MP4.');
+      } catch (err) {
+        alert('Failed to save config: ' + err);
+      }
+    }
+
+    function applyPreset(presetName) {
+      const preset = PRESETS[presetName];
+      if (!preset) return;
+      currentConfig = JSON.parse(JSON.stringify(preset));
+      renderSceneForm(currentScene);
+      refreshPreviewCustom();
+    }
+
+    async function startRender() {
+      const banner = document.getElementById('renderBanner');
+      const btn = document.getElementById('btnRender');
+      banner.style.display = 'flex';
+      btn.disabled = true;
+      btn.innerText = '⏳ Rendering...';
+
+      try {
+        await fetch('/api/render', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentConfig)
+        });
+        pollRenderProgress();
+      } catch (err) {
+        alert('Could not trigger render: ' + err);
+        btn.disabled = false;
+        btn.innerText = '⚡ Render Video';
+      }
+    }
+
+    async function pollRenderProgress() {
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch('/api/status');
+          const data = await res.json();
+
+          const bannerMsg = document.getElementById('bannerMsg');
+          const bannerPct = document.getElementById('bannerPct');
+          const bannerProgress = document.getElementById('bannerProgress');
+          const statusText = document.getElementById('statusText');
+
+          if (data.rendering) {
+            bannerMsg.innerText = data.message || 'Rendering...';
+            bannerPct.innerText = (data.progress || 50) + '%';
+            bannerProgress.style.width = (data.progress || 50) + '%';
+            statusText.innerText = 'Rendering MP4...';
+          } else {
+            clearInterval(interval);
+            const btn = document.getElementById('btnRender');
+            btn.disabled = false;
+            btn.innerText = '⚡ Render Video';
+
+            if (data.error) {
+              bannerMsg.innerText = 'Render failed: ' + data.error;
+              statusText.innerText = 'Render Error';
+            } else {
+              bannerMsg.innerText = data.message || 'Render Complete!';
+              bannerPct.innerText = '100%';
+              bannerProgress.style.width = '100%';
+              statusText.innerText = 'Ready';
+              // Switch to video view to show the result
+              switchView('video');
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }, 1000);
+    }
+
+    async function checkStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        if (data.video_ready) {
+          document.getElementById('statusText').innerText = `Ready (${data.video_size_mb} MB)`;
+        }
+      } catch (e) {}
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>

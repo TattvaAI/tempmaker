@@ -1,0 +1,82 @@
+{
+  "scene_2_monogram": {
+    "initials": "SM"
+  },
+  "scene_3_announcement": {
+    "monogram": "SM",
+    "couple_names": "Muskan & Shubham",
+    "subtext": "are getting married on ..",
+    "date": "21st September 2026"
+  },
+  "scene_4_invitation": {
+    "shloka": "॥ श्री गणेशाय नमः ॥",
+    "header_line1": "Together with their families",
+    "header_line2": "cordially invite you to celebrate the wedding ceremony of their daughter",
+    "bride_name": "Muskan",
+    "bride_parents_relation": "D/o",
+    "bride_parents_line1": "Mrs. Pammi Mittal &",
+    "bride_parents_line2": "Late Mr. Ashok Kumar Mittal",
+    "conjunction": "With",
+    "groom_name": "Shubham",
+    "groom_parents_relation": "S/o",
+    "groom_parents_line1": "Mrs. Uma Garg &",
+    "groom_parents_line2": "Lala Satish Kumar Garg"
+  },
+  "scene_5_haldi": {
+    "header": "You are invited to be a part of",
+    "title": "Haldi Ceremony",
+    "on_text": "on",
+    "date": "18 September 2026",
+    "time": "04:00 PM Onwards",
+    "venue_label": "Venue-",
+    "venue_name": "At our Residence",
+    "address_line1": "#620/A-61, Shalimar Vihar,",
+    "address_line2": "Jain College Road, Ambala City"
+  },
+  "scene_6_mehendi": {
+    "header": "You are invited to be a part of",
+    "title_line1": "Mehandi Ceremony",
+    "of_text": "of",
+    "bride_name": "Muskan",
+    "on_text": "on",
+    "date": "20 September 2026",
+    "time": "03:00 PM Onwards",
+    "venue_name": "Venue: At our Residence",
+    "address_line1": "#620/A-61, Shalimar Vihar,",
+    "address_line2": "Jain College Road, Ambala City"
+  },
+  "scene_7_sangeet": {
+    "header_line1": "YOU ARE CORDIALLY INVITED TO",
+    "header_line2": "JOIN US IN CELEBRATING THE",
+    "event_name_hindi": "संगीत",
+    "sub_header": "LADIES SANGEET CELEBRATION",
+    "bride_name": "Muskan",
+    "date": "20 SEPTEMBER 2026 • 7:00 PM ONWARDS",
+    "venue_label": "VENUE: AT OUR RESIDENCE",
+    "venue_name": "AMBALA CITY"
+  },
+  "scene_8_mandha": {
+    "title": "Mandha Ceremony",
+    "on_text": "on",
+    "date": "Monday, 21 September 2026",
+    "time": "Lunch 11:30 AM",
+    "venue_label": "Venue:",
+    "venue_name": "Kali Mata Mandir Auditorium",
+    "address": "Jain College Road, Ambala City"
+  },
+  "scene_9_wedding": {
+    "title": "Wedding Ceremony",
+    "on_text": "on",
+    "date": "Monday, 21 September 2026",
+    "time": "7:00 PM Onwards",
+    "venue_label": "Venue:",
+    "venue_name": "The Divine",
+    "address": "Meerut Road, Karnal, Haryana-132001"
+  },
+  "scene_10_closing": {
+    "title": "Save The Date",
+    "date": "21st September 2026",
+    "rsvp_label": "RSVP",
+    "rsvp_text": "From Mittal Family & Friends"
+  }
+}
