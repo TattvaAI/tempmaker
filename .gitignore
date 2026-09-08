@@ -45,3 +45,4 @@ scenes.txt
 *.log
 .vscode/
 .idea/
+!templates/*/preview_frames/

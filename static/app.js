@@ -230,6 +230,7 @@ function renderTemplatesGrid(templates) {
         <div class="project-card-badges">
           <span class="meta-badge">${t.total_scenes} Scenes</span>
           <span class="meta-badge">${durFormatted}</span>
+          ${t.has_output ? `<span class="meta-badge" style="background: rgba(16, 185, 129, 0.85); color: #fff;">✓ Latest Video</span>` : ''}
         </div>
       </div>
       <div class="project-card-body">
@@ -240,10 +241,18 @@ function renderTemplatesGrid(templates) {
           <span>${t.resolution || "1080x1920"}</span>
         </div>
         <div class="project-card-actions">
-          <button class="btn btn-primary btn-sm btn-open-project" data-id="${t.id}">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            Open Studio
-          </button>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button class="btn btn-primary btn-sm btn-open-project" data-id="${t.id}">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Open Studio
+            </button>
+            ${t.has_output ? `
+              <a class="btn btn-secondary btn-sm" href="/api/templates/${t.id}/download" download title="Download MP4">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                MP4
+              </a>
+            ` : ''}
+          </div>
           <button class="btn-card-delete" data-id="${t.id}" data-name="${escapeHtml(t.title)}" title="Delete project">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
           </button>

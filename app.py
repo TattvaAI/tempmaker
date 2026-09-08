@@ -245,15 +245,23 @@ def preview_frame(template_id):
     frame_idx = request.args.get("frame", type=int)
     scene_id = request.args.get("scene_id")
     
+    if frame_idx is None and scene_id:
+        for sc in template.get("scenes", []):
+            if sc["scene_id"] == scene_id:
+                frame_idx = sc.get("preview_frame", sc["start_frame"])
+                break
+                
     if frame_idx is None:
-        if scene_id:
-            for sc in template.get("scenes", []):
-                if sc["scene_id"] == scene_id:
-                    frame_idx = sc.get("preview_frame", sc["start_frame"])
-                    break
-        if frame_idx is None:
-            frame_idx = 0
-            
+        frame_idx = 0
+        
+    if scene_id:
+        for sc in template.get("scenes", []):
+            if sc["scene_id"] == scene_id and sc.get("preview_path"):
+                p = os.path.join(template_dir, sc["preview_path"]) if not os.path.isabs(sc["preview_path"]) else sc["preview_path"]
+                if os.path.exists(p) and sc.get("preview_frame") == frame_idx:
+                    with open(p, "rb") as f:
+                        return Response(f.read(), mimetype="image/jpeg", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
+                        
     cap = cv2.VideoCapture(clean_video_path)
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
     ret, frame = cap.read()
