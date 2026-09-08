@@ -14,28 +14,36 @@ FONTS_DIR = os.path.join(SCRIPT_DIR, "fonts")
 def is_devanagari(text):
     return any(0x0900 <= ord(c) <= 0x097F or 0x0964 <= ord(c) <= 0x0965 for c in text)
 
-def get_font_for_field(field_type, font_size, text=""):
+def get_font_for_field(field_type, font_size, text="", custom_font=None):
     """
     Select appropriate font based on field type, text script, and desired size.
+    Supports user-specified custom font overrides.
     """
     try:
-        if is_devanagari(text):
-            font_path = os.path.join(FONTS_DIR, "RozhaOne-Regular.ttf")
-        elif field_type == "names":
-            font_path = os.path.join(FONTS_DIR, "GreatVibes-Regular.ttf")
-        elif field_type == "title":
-            font_path = os.path.join(FONTS_DIR, "Cinzel.ttf")
-        elif field_type == "date" or field_type == "time":
-            font_path = os.path.join(FONTS_DIR, "Georgia Bold.ttf")
-        elif field_type == "venue":
-            font_path = os.path.join(FONTS_DIR, "Georgia.ttf")
-        else:
-            font_path = os.path.join(FONTS_DIR, "Georgia Italic.ttf")
+        font_path = None
+        if custom_font:
+            candidate = os.path.join(FONTS_DIR, custom_font)
+            if os.path.exists(candidate):
+                font_path = candidate
+
+        if not font_path:
+            if is_devanagari(text):
+                font_path = os.path.join(FONTS_DIR, "RozhaOne-Regular.ttf")
+            elif field_type == "names":
+                font_path = os.path.join(FONTS_DIR, "GreatVibes-Regular.ttf")
+            elif field_type == "title":
+                font_path = os.path.join(FONTS_DIR, "Cinzel.ttf")
+            elif field_type == "date" or field_type == "time":
+                font_path = os.path.join(FONTS_DIR, "Georgia Bold.ttf")
+            elif field_type == "venue":
+                font_path = os.path.join(FONTS_DIR, "Georgia.ttf")
+            else:
+                font_path = os.path.join(FONTS_DIR, "Georgia Italic.ttf")
             
-        if not os.path.exists(font_path):
+        if not font_path or not os.path.exists(font_path):
             font_path = os.path.join(FONTS_DIR, "Georgia.ttf")
             
-        return ImageFont.truetype(font_path, max(18, int(font_size)))
+        return ImageFont.truetype(font_path, max(14, int(font_size)))
     except Exception:
         return ImageFont.load_default()
 
@@ -76,7 +84,7 @@ def render_frame_with_template(base_bgr, frame_idx, scenes, video_w, video_h):
             
         font_size = f.get("font_size", 36)
         f_type = f.get("type", "text")
-        font = get_font_for_field(f_type, font_size, text)
+        font = get_font_for_field(f_type, font_size, text, custom_font=f.get("font"))
         
         color_rgba = parse_hex_color(f.get("color", "#ffffff"), a_val)
         

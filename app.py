@@ -115,26 +115,56 @@ def list_templates():
                         with open(t_json_path, "r", encoding="utf-8") as f:
                             t_data = json.load(f)
                             
-                        first_preview = None
-                        if t_data.get("scenes"):
-                            for sc in t_data["scenes"]:
-                                if sc.get("preview_path") and os.path.exists(os.path.join(entry.path, sc["preview_path"])):
-                                    first_preview = f"/api/templates/{entry.name}/thumbnail"
-                                    break
-                                    
+                        first_preview = f"/api/templates/{entry.name}/thumbnail"
+                        v_info = t_data.get("video_info", {})
+                        mtime = os.path.getmtime(entry.path)
                         templates.append({
                             "id": entry.name,
                             "title": t_data.get("title", entry.name),
                             "description": t_data.get("description", ""),
                             "total_scenes": len(t_data.get("scenes", [])),
                             "total_fields": t_data.get("total_fields", 0),
+                            "duration_sec": v_info.get("duration_sec", 0),
+                            "resolution": f"{v_info.get('width', 1080)}x{v_info.get('height', 1920)}",
                             "has_clean_base": os.path.exists(clean_mp4),
                             "has_output": os.path.exists(out_mp4),
-                            "thumbnail": first_preview
+                            "thumbnail": first_preview,
+                            "updated_at": mtime
                         })
                     except Exception:
                         pass
+    templates.sort(key=lambda x: x.get("updated_at", 0), reverse=True)
     return jsonify(templates)
+
+@app.route("/api/templates/<template_id>", methods=["DELETE"])
+def delete_template(template_id):
+    template_dir = os.path.join(TEMPLATES_DIR, template_id)
+    if not os.path.exists(template_dir):
+        return jsonify({"error": "Template not found"}), 404
+    try:
+        shutil.rmtree(template_dir)
+        return jsonify({"status": "deleted", "message": f"Template {template_id} deleted successfully"})
+    except Exception as e:
+        return jsonify({"error": f"Failed to delete template: {str(e)}"}), 500
+
+@app.route("/api/templates/<template_id>/rename", methods=["POST"])
+def rename_template(template_id):
+    t_path = os.path.join(TEMPLATES_DIR, template_id, "template.json")
+    if not os.path.exists(t_path):
+        return jsonify({"error": "Template not found"}), 404
+    data = request.json or {}
+    new_title = data.get("title", "").strip()
+    if not new_title:
+        return jsonify({"error": "Title cannot be empty"}), 400
+    try:
+        with open(t_path, "r", encoding="utf-8") as f:
+            t_data = json.load(f)
+        t_data["title"] = new_title
+        with open(t_path, "w", encoding="utf-8") as f:
+            json.dump(t_data, f, indent=2, ensure_ascii=False)
+        return jsonify({"status": "renamed", "title": new_title})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/api/templates/upload", methods=["POST"])
 def upload_video():
@@ -246,14 +276,29 @@ def get_thumbnail(template_id):
     template_dir = os.path.join(TEMPLATES_DIR, template_id)
     t_path = os.path.join(template_dir, "template.json")
     if os.path.exists(t_path):
-        with open(t_path, "r", encoding="utf-8") as f:
-            template = json.load(f)
-        for sc in template.get("scenes", []):
-            p_rel = sc.get("preview_path")
-            if p_rel:
-                abs_p = os.path.join(template_dir, p_rel) if not os.path.isabs(p_rel) else p_rel
-                if os.path.exists(abs_p):
-                    return send_file(abs_p, mimetype="image/jpeg")
+        try:
+            with open(t_path, "r", encoding="utf-8") as f:
+                template = json.load(f)
+            for sc in template.get("scenes", []):
+                p = sc.get("preview_path")
+                if p:
+                    candidates = [
+                        p if os.path.isabs(p) else os.path.join(template_dir, p),
+                        os.path.join(template_dir, os.path.basename(p)),
+                        os.path.join(template_dir, "preview_frames", os.path.basename(p))
+                    ]
+                    for cand in candidates:
+                        if os.path.exists(cand):
+                            return send_file(cand, mimetype="image/jpeg")
+        except Exception:
+            pass
+            
+    pf_dir = os.path.join(template_dir, "preview_frames")
+    if os.path.exists(pf_dir):
+        for fname in sorted(os.listdir(pf_dir)):
+            if fname.lower().endswith((".jpg", ".jpeg", ".png")):
+                return send_file(os.path.join(pf_dir, fname), mimetype="image/jpeg")
+                
     return Response(b"", status=404)
 
 @app.route("/api/templates/<template_id>/render", methods=["POST"])

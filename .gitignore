@@ -5,6 +5,8 @@ __pycache__/
 .venv/
 env/
 venv/
+.env
+.env.*
 
 # Native Binaries (compiled via bin/build.sh)
 bin/vision_ocr

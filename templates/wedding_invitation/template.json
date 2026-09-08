@@ -103,7 +103,7 @@
         {
           "id": "s4_shloka",
           "label": "Auspicious Shloka",
-          "value": "॥ श्री गणेशाय नमः ॥",
+          "value": "\u0965 \u0936\u094d\u0930\u0940 \u0917\u0923\u0947\u0936\u093e\u092f \u0928\u092e\u0903 \u0965",
           "type": "title",
           "font_size": 42,
           "color": "#d67b27",
@@ -433,7 +433,7 @@
         {
           "id": "s7_hindi",
           "label": "Event Name (Hindi)",
-          "value": "संगीत",
+          "value": "\u0938\u0902\u0917\u0940\u0924",
           "type": "title",
           "font_size": 140,
           "color": "#f8ca3f",
@@ -466,7 +466,7 @@
         {
           "id": "s7_date_time",
           "label": "Date & Time",
-          "value": "20 SEPTEMBER 2026 • 7:00 PM ONWARDS",
+          "value": "20 SEPTEMBER 2026 \u2022 7:00 PM ONWARDS",
           "type": "date",
           "font_size": 36,
           "color": "#ffffff",
@@ -641,5 +641,6 @@
         }
       ]
     }
-  ]
+  ],
+  "total_fields": 49
 }

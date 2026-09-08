@@ -1,0 +1,1147 @@
+{
+  "template_id": "WhatsApp_Video_2026-08-31_at_22.40.12_1788698458",
+  "title": "Royal Wedding (Mansi & Ankush)",
+  "source_video": "templates/WhatsApp_Video_2026-08-31_at_22.40.12_1788698458/source.mp4",
+  "video_info": {
+    "path": "templates/WhatsApp_Video_2026-08-31_at_22.40.12_1788698458/source.mp4",
+    "fps": 30.020336148622494,
+    "total_frames": 1551,
+    "duration_sec": 51.66,
+    "width": 480,
+    "height": 848
+  },
+  "total_fields": 55,
+  "scenes": [
+    {
+      "scene_id": "scene_1",
+      "scene_num": 1,
+      "name": "Scene 1 (0.0s - 4.2s)",
+      "start_frame": 0,
+      "end_frame": 126,
+      "start_time_sec": 0.0,
+      "end_time_sec": 4.2,
+      "duration_sec": 4.2,
+      "preview_frame": 94,
+      "preview_path": "preview_frames/scene_01_golden.jpg",
+      "fields": [
+        {
+          "id": "field_1_1",
+          "label": "Hashtag 1: #KhushहुआMan",
+          "value": "#KhushहुआMan",
+          "default_value": "#KhushहुआMan",
+          "type": "hashtag",
+          "box": [
+            0.154,
+            0.623,
+            0.721,
+            0.021
+          ],
+          "x_percent": 51.5,
+          "y_percent": 63.3,
+          "font_size": 22,
+          "color": "#ccbfac",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_2",
+      "scene_num": 2,
+      "name": "Scene 2 (4.2s - 8.99s)",
+      "start_frame": 126,
+      "end_frame": 270,
+      "start_time_sec": 4.2,
+      "end_time_sec": 8.99,
+      "duration_sec": 4.8,
+      "preview_frame": 234,
+      "preview_path": "preview_frames/scene_02_golden.jpg",
+      "fields": [
+        {
+          "id": "field_2_1",
+          "label": "Title 1: You Are Invited To",
+          "value": "You Are Invited To",
+          "default_value": "You Are Invited To",
+          "type": "title",
+          "box": [
+            0.258,
+            0.245,
+            0.521,
+            0.033
+          ],
+          "x_percent": 51.9,
+          "y_percent": 26.2,
+          "font_size": 22,
+          "color": "#839088",
+          "align": "center"
+        },
+        {
+          "id": "field_2_2",
+          "label": "Title 2: You Are Invited To",
+          "value": "You Are Invited To",
+          "default_value": "You Are Invited To",
+          "type": "title",
+          "box": [
+            0.333,
+            0.293,
+            0.376,
+            0.046
+          ],
+          "x_percent": 52.1,
+          "y_percent": 31.6,
+          "font_size": 31,
+          "color": "#77837b",
+          "align": "center"
+        },
+        {
+          "id": "field_2_3",
+          "label": "Names 3: Mansi & Ankush",
+          "value": "Mansi & Ankush",
+          "default_value": "Mansi & Ankush",
+          "type": "names",
+          "box": [
+            0.15,
+            0.358,
+            0.746,
+            0.071
+          ],
+          "x_percent": 52.3,
+          "y_percent": 39.4,
+          "font_size": 47,
+          "color": "#aea999",
+          "align": "center"
+        },
+        {
+          "id": "field_2_4",
+          "label": "Hashtag 4: #Khushहशन्नMan",
+          "value": "#Khushहशन्नMan",
+          "default_value": "#Khushहशन्नMan",
+          "type": "hashtag",
+          "box": [
+            0.237,
+            0.455,
+            0.535,
+            0.058
+          ],
+          "x_percent": 50.4,
+          "y_percent": 48.5,
+          "font_size": 39,
+          "color": "#adaa9b",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_3",
+      "scene_num": 3,
+      "name": "Scene 3 (8.99s - 15.39s)",
+      "start_frame": 270,
+      "end_frame": 462,
+      "start_time_sec": 8.99,
+      "end_time_sec": 15.39,
+      "duration_sec": 6.4,
+      "preview_frame": 414,
+      "preview_path": "preview_frames/scene_03_golden.jpg",
+      "fields": [
+        {
+          "id": "field_3_1",
+          "label": "General 1: INVITE YOU TO CELEBRAT",
+          "value": "INVITE YOU TO CELEBRATE WEDDING OF THEIR GRAND DAUGHTER",
+          "default_value": "INVITE YOU TO CELEBRATE WEDDING OF THEIR GRAND DAUGHTER",
+          "type": "general",
+          "box": [
+            0.367,
+            0.219,
+            0.254,
+            0.014
+          ],
+          "x_percent": 49.4,
+          "y_percent": 22.6,
+          "font_size": 22,
+          "color": "#949490",
+          "align": "center"
+        },
+        {
+          "id": "field_3_2",
+          "label": "General 2: INVITE YOU TO CELEBRAT",
+          "value": "INVITE YOU TO CELEBRATE WEDDING OF THEIR GRAND DAUGHTER",
+          "default_value": "INVITE YOU TO CELEBRATE WEDDING OF THEIR GRAND DAUGHTER",
+          "type": "general",
+          "box": [
+            0.279,
+            0.262,
+            0.45,
+            0.021
+          ],
+          "x_percent": 50.4,
+          "y_percent": 27.2,
+          "font_size": 22,
+          "color": "#9a9a97",
+          "align": "center"
+        },
+        {
+          "id": "field_3_3",
+          "label": "Names 3: Mansi",
+          "value": "Mansi",
+          "default_value": "Mansi",
+          "type": "names",
+          "box": [
+            0.233,
+            0.325,
+            0.558,
+            0.014
+          ],
+          "x_percent": 51.3,
+          "y_percent": 33.3,
+          "font_size": 22,
+          "color": "#a2a29e",
+          "align": "center"
+        },
+        {
+          "id": "field_3_4",
+          "label": "Names 4: Mansi",
+          "value": "Mansi",
+          "default_value": "Mansi",
+          "type": "names",
+          "box": [
+            0.354,
+            0.399,
+            0.292,
+            0.052
+          ],
+          "x_percent": 50.0,
+          "y_percent": 42.5,
+          "font_size": 35,
+          "color": "#7d7f7f",
+          "align": "center"
+        },
+        {
+          "id": "field_3_5",
+          "label": "General 5: With",
+          "value": "With",
+          "default_value": "With",
+          "type": "general",
+          "box": [
+            0.242,
+            0.467,
+            0.537,
+            0.028
+          ],
+          "x_percent": 51.0,
+          "y_percent": 48.1,
+          "font_size": 22,
+          "color": "#a3a3a0",
+          "align": "center"
+        },
+        {
+          "id": "field_3_6",
+          "label": "Names 6: Ankush",
+          "value": "Ankush",
+          "default_value": "Ankush",
+          "type": "names",
+          "box": [
+            0.446,
+            0.531,
+            0.112,
+            0.028
+          ],
+          "x_percent": 50.2,
+          "y_percent": 54.5,
+          "font_size": 22,
+          "color": "#8f908e",
+          "align": "center"
+        },
+        {
+          "id": "field_3_7",
+          "label": "General 7: S/o Mrs. Saroj & Mr. A",
+          "value": "S/o Mrs. Saroj & Mr. Anil Goyal of Panchkula",
+          "default_value": "S/o Mrs. Saroj & Mr. Anil Goyal of Panchkula",
+          "type": "general",
+          "box": [
+            0.341,
+            0.57,
+            0.33,
+            0.048
+          ],
+          "x_percent": 50.6,
+          "y_percent": 59.4,
+          "font_size": 32,
+          "color": "#7d7f80",
+          "align": "center"
+        },
+        {
+          "id": "field_3_8",
+          "label": "General 8: S/o Mrs. Saroj & Mr. A",
+          "value": "S/o Mrs. Saroj & Mr. Anil Goyal of Panchkula",
+          "default_value": "S/o Mrs. Saroj & Mr. Anil Goyal of Panchkula",
+          "type": "general",
+          "box": [
+            0.221,
+            0.634,
+            0.542,
+            0.028
+          ],
+          "x_percent": 49.2,
+          "y_percent": 64.9,
+          "font_size": 22,
+          "color": "#a1a19e",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_4",
+      "scene_num": 4,
+      "name": "Scene 4 (15.39s - 20.52s)",
+      "start_frame": 462,
+      "end_frame": 616,
+      "start_time_sec": 15.39,
+      "end_time_sec": 20.52,
+      "duration_sec": 5.13,
+      "preview_frame": 577,
+      "preview_path": "preview_frames/scene_04_golden.jpg",
+      "fields": [
+        {
+          "id": "field_4_1",
+          "label": "Title 1: You Are Cordially Invi",
+          "value": "You Are Cordially Invited To The",
+          "default_value": "You Are Cordially Invited To The",
+          "type": "title",
+          "box": [
+            0.325,
+            0.217,
+            0.375,
+            0.021
+          ],
+          "x_percent": 51.3,
+          "y_percent": 22.8,
+          "font_size": 22,
+          "color": "#749564",
+          "align": "center"
+        },
+        {
+          "id": "field_4_2",
+          "label": "Title 2: Haldi Ceremony",
+          "value": "Haldi Ceremony",
+          "default_value": "Haldi Ceremony",
+          "type": "title",
+          "box": [
+            0.224,
+            0.287,
+            0.556,
+            0.048
+          ],
+          "x_percent": 50.2,
+          "y_percent": 31.1,
+          "font_size": 32,
+          "color": "#b68087",
+          "align": "center"
+        },
+        {
+          "id": "field_4_3",
+          "label": "Title 3: Of",
+          "value": "Of",
+          "default_value": "Of",
+          "type": "title",
+          "box": [
+            0.475,
+            0.351,
+            0.054,
+            0.019
+          ],
+          "x_percent": 50.2,
+          "y_percent": 36.1,
+          "font_size": 22,
+          "color": "#6e8f5d",
+          "align": "center"
+        },
+        {
+          "id": "field_4_4",
+          "label": "Names 4: Mansi",
+          "value": "Mansi",
+          "default_value": "Mansi",
+          "type": "names",
+          "box": [
+            0.375,
+            0.377,
+            0.263,
+            0.049
+          ],
+          "x_percent": 50.6,
+          "y_percent": 40.1,
+          "font_size": 33,
+          "color": "#b4787f",
+          "align": "center"
+        },
+        {
+          "id": "field_4_5",
+          "label": "Date 5: 03 December 2025",
+          "value": "03 December 2025",
+          "default_value": "03 December 2025",
+          "type": "date",
+          "box": [
+            0.308,
+            0.443,
+            0.408,
+            0.024
+          ],
+          "x_percent": 51.3,
+          "y_percent": 45.5,
+          "font_size": 22,
+          "color": "#7f9c71",
+          "align": "center"
+        },
+        {
+          "id": "field_4_6",
+          "label": "Venue 6: at our Residence",
+          "value": "at our Residence",
+          "default_value": "at our Residence",
+          "type": "venue",
+          "box": [
+            0.325,
+            0.531,
+            0.379,
+            0.026
+          ],
+          "x_percent": 51.5,
+          "y_percent": 54.4,
+          "font_size": 22,
+          "color": "#809d70",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_5",
+      "scene_num": 5,
+      "name": "Scene 5 (20.52s - 27.11s)",
+      "start_frame": 616,
+      "end_frame": 814,
+      "start_time_sec": 20.52,
+      "end_time_sec": 27.11,
+      "duration_sec": 6.6,
+      "preview_frame": 764,
+      "preview_path": "preview_frames/scene_05_golden.jpg",
+      "fields": [
+        {
+          "id": "field_5_1",
+          "label": "Title 1: We cordially invite yo",
+          "value": "We cordially invite you to the Ring Ceremony of",
+          "default_value": "We cordially invite you to the Ring Ceremony of",
+          "type": "title",
+          "box": [
+            0.254,
+            0.182,
+            0.487,
+            0.028
+          ],
+          "x_percent": 49.8,
+          "y_percent": 19.6,
+          "font_size": 22,
+          "color": "#adab8f",
+          "align": "center"
+        },
+        {
+          "id": "field_5_2",
+          "label": "Title 2: We cordially invite yo",
+          "value": "We cordially invite you to the Ring Ceremony of",
+          "default_value": "We cordially invite you to the Ring Ceremony of",
+          "type": "title",
+          "box": [
+            0.392,
+            0.262,
+            0.225,
+            0.045
+          ],
+          "x_percent": 50.4,
+          "y_percent": 28.4,
+          "font_size": 30,
+          "color": "#918e69",
+          "align": "center"
+        },
+        {
+          "id": "field_5_3",
+          "label": "Names 3: Mansi & Ankush",
+          "value": "Mansi & Ankush",
+          "default_value": "Mansi & Ankush",
+          "type": "names",
+          "box": [
+            0.375,
+            0.351,
+            0.267,
+            0.044
+          ],
+          "x_percent": 50.8,
+          "y_percent": 37.3,
+          "font_size": 29,
+          "color": "#888863",
+          "align": "center"
+        },
+        {
+          "id": "field_5_4",
+          "label": "Date 4: On Thrusday, 04 Decemb",
+          "value": "On Thrusday, 04 December At 7:00 PM",
+          "default_value": "On Thrusday, 04 December At 7:00 PM",
+          "type": "date",
+          "box": [
+            0.279,
+            0.446,
+            0.512,
+            0.026
+          ],
+          "x_percent": 53.5,
+          "y_percent": 45.9,
+          "font_size": 22,
+          "color": "#83825a",
+          "align": "center"
+        },
+        {
+          "id": "field_5_5",
+          "label": "Date 5: On Thrusday, 04 Decemb",
+          "value": "On Thrusday, 04 December At 7:00 PM",
+          "default_value": "On Thrusday, 04 December At 7:00 PM",
+          "type": "date",
+          "box": [
+            0.453,
+            0.532,
+            0.151,
+            0.027
+          ],
+          "x_percent": 52.9,
+          "y_percent": 54.5,
+          "font_size": 22,
+          "color": "#79784c",
+          "align": "center"
+        },
+        {
+          "id": "field_5_6",
+          "label": "Venue 6: Venue GK Resort, Zirak",
+          "value": "Venue GK Resort, Zirakpur",
+          "default_value": "Venue GK Resort, Zirakpur",
+          "type": "venue",
+          "box": [
+            0.263,
+            0.578,
+            0.5,
+            0.033
+          ],
+          "x_percent": 51.3,
+          "y_percent": 59.4,
+          "font_size": 22,
+          "color": "#7a784a",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_6",
+      "scene_num": 6,
+      "name": "Scene 6 (27.11s - 33.71s)",
+      "start_frame": 814,
+      "end_frame": 1012,
+      "start_time_sec": 27.11,
+      "end_time_sec": 33.71,
+      "duration_sec": 6.6,
+      "preview_frame": 962,
+      "preview_path": "preview_frames/scene_06_golden.jpg",
+      "fields": [
+        {
+          "id": "field_6_1",
+          "label": "Title 1: MANDHA CEREMONY",
+          "value": "MANDHA CEREMONY",
+          "default_value": "MANDHA CEREMONY",
+          "type": "title",
+          "box": [
+            0.279,
+            0.207,
+            0.513,
+            0.051
+          ],
+          "x_percent": 53.5,
+          "y_percent": 23.2,
+          "font_size": 34,
+          "color": "#bdcd71",
+          "align": "center"
+        },
+        {
+          "id": "field_6_2",
+          "label": "Title 2: MANDHA CEREMONY",
+          "value": "MANDHA CEREMONY",
+          "default_value": "MANDHA CEREMONY",
+          "type": "title",
+          "box": [
+            0.213,
+            0.267,
+            0.646,
+            0.05
+          ],
+          "x_percent": 53.5,
+          "y_percent": 29.1,
+          "font_size": 33,
+          "color": "#bccd72",
+          "align": "center"
+        },
+        {
+          "id": "field_6_3",
+          "label": "Date 3: on 05 December 2025",
+          "value": "on 05 December 2025",
+          "default_value": "on 05 December 2025",
+          "type": "date",
+          "box": [
+            0.567,
+            0.356,
+            0.083,
+            0.021
+          ],
+          "x_percent": 60.8,
+          "y_percent": 36.7,
+          "font_size": 22,
+          "color": "#51b6b5",
+          "align": "left"
+        },
+        {
+          "id": "field_6_4",
+          "label": "Date 4: on 05 December 2025",
+          "value": "on 05 December 2025",
+          "default_value": "on 05 December 2025",
+          "type": "date",
+          "box": [
+            0.462,
+            0.401,
+            0.058,
+            0.019
+          ],
+          "x_percent": 49.2,
+          "y_percent": 41.0,
+          "font_size": 22,
+          "color": "#b5e3e5",
+          "align": "left"
+        },
+        {
+          "id": "field_6_5",
+          "label": "Time 5: at 11:00 AM",
+          "value": "at 11:00 AM",
+          "default_value": "at 11:00 AM",
+          "type": "time",
+          "box": [
+            0.3,
+            0.441,
+            0.4,
+            0.026
+          ],
+          "x_percent": 50.0,
+          "y_percent": 45.4,
+          "font_size": 22,
+          "color": "#a2d6d7",
+          "align": "left"
+        },
+        {
+          "id": "field_6_6",
+          "label": "Time 6: at 11:00 AM",
+          "value": "at 11:00 AM",
+          "default_value": "at 11:00 AM",
+          "type": "time",
+          "box": [
+            0.416,
+            0.487,
+            0.226,
+            0.025
+          ],
+          "x_percent": 52.9,
+          "y_percent": 50.0,
+          "font_size": 22,
+          "color": "#9ed1d3",
+          "align": "left"
+        },
+        {
+          "id": "field_6_7",
+          "label": "Venue 7: VENUE Aggarwal Dharmsh",
+          "value": "VENUE Aggarwal Dharmshala (Anaj Mandi, kalayat)",
+          "default_value": "VENUE Aggarwal Dharmshala (Anaj Mandi, kalayat)",
+          "type": "venue",
+          "box": [
+            0.417,
+            0.528,
+            0.175,
+            0.05
+          ],
+          "x_percent": 50.4,
+          "y_percent": 55.3,
+          "font_size": 33,
+          "color": "#83ba8a",
+          "align": "center"
+        },
+        {
+          "id": "field_6_8",
+          "label": "Venue 8: VENUE Aggarwal Dharmsh",
+          "value": "VENUE Aggarwal Dharmshala (Anaj Mandi, kalayat)",
+          "default_value": "VENUE Aggarwal Dharmshala (Anaj Mandi, kalayat)",
+          "type": "venue",
+          "box": [
+            0.225,
+            0.592,
+            0.546,
+            0.038
+          ],
+          "x_percent": 49.8,
+          "y_percent": 61.1,
+          "font_size": 25,
+          "color": "#9dcdce",
+          "align": "center"
+        },
+        {
+          "id": "field_6_9",
+          "label": "Venue 9: VENUE Aggarwal Dharmsh",
+          "value": "VENUE Aggarwal Dharmshala (Anaj Mandi, kalayat)",
+          "default_value": "VENUE Aggarwal Dharmshala (Anaj Mandi, kalayat)",
+          "type": "venue",
+          "box": [
+            0.325,
+            0.634,
+            0.342,
+            0.024
+          ],
+          "x_percent": 49.6,
+          "y_percent": 64.6,
+          "font_size": 22,
+          "color": "#92ccce",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_7",
+      "scene_num": 7,
+      "name": "Scene 7 (33.71s - 39.37s)",
+      "start_frame": 1012,
+      "end_frame": 1182,
+      "start_time_sec": 33.71,
+      "end_time_sec": 39.37,
+      "duration_sec": 5.66,
+      "preview_frame": 1139,
+      "preview_path": "preview_frames/scene_07_golden.jpg",
+      "fields": [
+        {
+          "id": "field_7_1",
+          "label": "General 1: DANCING & DINNER",
+          "value": "DANCING & DINNER",
+          "default_value": "DANCING & DINNER",
+          "type": "general",
+          "box": [
+            0.214,
+            0.132,
+            0.638,
+            0.082
+          ],
+          "x_percent": 53.4,
+          "y_percent": 17.3,
+          "font_size": 55,
+          "color": "#7b7a4a",
+          "align": "center"
+        },
+        {
+          "id": "field_7_2",
+          "label": "General 2: on",
+          "value": "on",
+          "default_value": "on",
+          "type": "general",
+          "box": [
+            0.254,
+            0.236,
+            0.546,
+            0.031
+          ],
+          "x_percent": 52.7,
+          "y_percent": 25.1,
+          "font_size": 22,
+          "color": "#bcc5cc",
+          "align": "center"
+        },
+        {
+          "id": "field_7_3",
+          "label": "General 3: Venue",
+          "value": "Venue",
+          "default_value": "Venue",
+          "type": "general",
+          "box": [
+            0.483,
+            0.292,
+            0.067,
+            0.024
+          ],
+          "x_percent": 51.7,
+          "y_percent": 30.4,
+          "font_size": 22,
+          "color": "#e5eef4",
+          "align": "center"
+        },
+        {
+          "id": "field_7_4",
+          "label": "Venue 4: Aggarwal Dharamshala",
+          "value": "Aggarwal Dharamshala",
+          "default_value": "Aggarwal Dharamshala",
+          "type": "venue",
+          "box": [
+            0.292,
+            0.34,
+            0.467,
+            0.028
+          ],
+          "x_percent": 52.5,
+          "y_percent": 35.4,
+          "font_size": 22,
+          "color": "#bcc6ce",
+          "align": "center"
+        },
+        {
+          "id": "field_7_5",
+          "label": "Venue 5: Aggarwal Dharamshala",
+          "value": "Aggarwal Dharamshala",
+          "default_value": "Aggarwal Dharamshala",
+          "type": "venue",
+          "box": [
+            0.346,
+            0.394,
+            0.354,
+            0.026
+          ],
+          "x_percent": 52.3,
+          "y_percent": 40.7,
+          "font_size": 22,
+          "color": "#b2bcc5",
+          "align": "center"
+        },
+        {
+          "id": "field_7_6",
+          "label": "Venue 6: Aggarwal Dharamshala",
+          "value": "Aggarwal Dharamshala",
+          "default_value": "Aggarwal Dharamshala",
+          "type": "venue",
+          "box": [
+            0.433,
+            0.457,
+            0.159,
+            0.029
+          ],
+          "x_percent": 51.2,
+          "y_percent": 47.2,
+          "font_size": 22,
+          "color": "#a8a26a",
+          "align": "center"
+        },
+        {
+          "id": "field_7_7",
+          "label": "Venue 7: Aggarwal Dharamshala",
+          "value": "Aggarwal Dharamshala",
+          "default_value": "Aggarwal Dharamshala",
+          "type": "venue",
+          "box": [
+            0.229,
+            0.509,
+            0.596,
+            0.035
+          ],
+          "x_percent": 52.7,
+          "y_percent": 52.7,
+          "font_size": 23,
+          "color": "#b8c1c8",
+          "align": "center"
+        },
+        {
+          "id": "field_7_8",
+          "label": "Text 8: (Anaj Mandi Kalayat)",
+          "value": "(Anaj Mandi Kalayat)",
+          "default_value": "(Anaj Mandi Kalayat)",
+          "type": "text",
+          "box": [
+            0.342,
+            0.557,
+            0.367,
+            0.026
+          ],
+          "x_percent": 52.5,
+          "y_percent": 57.0,
+          "font_size": 22,
+          "color": "#a1adb7",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_8",
+      "scene_num": 8,
+      "name": "Scene 8 (39.37s - 43.37s)",
+      "start_frame": 1182,
+      "end_frame": 1302,
+      "start_time_sec": 39.37,
+      "end_time_sec": 43.37,
+      "duration_sec": 4.0,
+      "preview_frame": 1272,
+      "preview_path": "preview_frames/scene_08_golden.jpg",
+      "fields": [
+        {
+          "id": "field_8_1",
+          "label": "Names 1: Mansi & Ankush",
+          "value": "Mansi & Ankush",
+          "default_value": "Mansi & Ankush",
+          "type": "names",
+          "box": [
+            0.158,
+            0.218,
+            0.68,
+            0.07
+          ],
+          "x_percent": 49.8,
+          "y_percent": 25.2,
+          "font_size": 47,
+          "color": "#bead6f",
+          "align": "center"
+        },
+        {
+          "id": "field_8_2",
+          "label": "Names 2: Mansi & Ankush",
+          "value": "Mansi & Ankush",
+          "default_value": "Mansi & Ankush",
+          "type": "names",
+          "box": [
+            0.192,
+            0.351,
+            0.629,
+            0.047
+          ],
+          "x_percent": 50.6,
+          "y_percent": 37.5,
+          "font_size": 31,
+          "color": "#b59e50",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_9",
+      "scene_num": 9,
+      "name": "Scene 9 (43.37s - 47.97s)",
+      "start_frame": 1302,
+      "end_frame": 1440,
+      "start_time_sec": 43.37,
+      "end_time_sec": 47.97,
+      "duration_sec": 4.6,
+      "preview_frame": 1405,
+      "preview_path": "preview_frames/scene_09_golden.jpg",
+      "fields": [
+        {
+          "id": "field_9_1",
+          "label": "Date 1: DEC",
+          "value": "DEC",
+          "default_value": "DEC",
+          "type": "date",
+          "box": [
+            0.221,
+            0.177,
+            0.562,
+            0.054
+          ],
+          "x_percent": 50.2,
+          "y_percent": 20.4,
+          "font_size": 36,
+          "color": "#b4a25f",
+          "align": "center"
+        },
+        {
+          "id": "field_9_2",
+          "label": "Venue 2: THE GRAND ORIENT",
+          "value": "THE GRAND ORIENT",
+          "default_value": "THE GRAND ORIENT",
+          "type": "venue",
+          "box": [
+            0.454,
+            0.252,
+            0.092,
+            0.019
+          ],
+          "x_percent": 50.0,
+          "y_percent": 26.2,
+          "font_size": 22,
+          "color": "#ab9e66",
+          "align": "center"
+        },
+        {
+          "id": "field_9_3",
+          "label": "Venue 3: THE GRAND ORIENT",
+          "value": "THE GRAND ORIENT",
+          "default_value": "THE GRAND ORIENT",
+          "type": "venue",
+          "box": [
+            0.433,
+            0.288,
+            0.517,
+            0.052
+          ],
+          "x_percent": 69.2,
+          "y_percent": 31.4,
+          "font_size": 35,
+          "color": "#b6a560",
+          "align": "center"
+        },
+        {
+          "id": "field_9_4",
+          "label": "General 4: शुभ विवाह",
+          "value": "शुभ विवाह",
+          "default_value": "शुभ विवाह",
+          "type": "general",
+          "box": [
+            0.446,
+            0.354,
+            0.104,
+            0.021
+          ],
+          "x_percent": 49.8,
+          "y_percent": 36.4,
+          "font_size": 22,
+          "color": "#aa9d68",
+          "align": "center"
+        },
+        {
+          "id": "field_9_5",
+          "label": "General 5: शुभ विवाह",
+          "value": "शुभ विवाह",
+          "default_value": "शुभ विवाह",
+          "type": "general",
+          "box": [
+            0.179,
+            0.394,
+            0.642,
+            0.028
+          ],
+          "x_percent": 50.0,
+          "y_percent": 40.8,
+          "font_size": 22,
+          "color": "#978123",
+          "align": "center"
+        },
+        {
+          "id": "field_9_6",
+          "label": "General 6: शुभ विवाह",
+          "value": "शुभ विवाह",
+          "default_value": "शुभ विवाह",
+          "type": "general",
+          "box": [
+            0.192,
+            0.436,
+            0.617,
+            0.026
+          ],
+          "x_percent": 50.0,
+          "y_percent": 44.9,
+          "font_size": 22,
+          "color": "#baad7c",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_10",
+      "scene_num": 10,
+      "name": "Scene 10 (47.97s - 51.63s)",
+      "start_frame": 1440,
+      "end_frame": 1550,
+      "start_time_sec": 47.97,
+      "end_time_sec": 51.63,
+      "duration_sec": 3.66,
+      "preview_frame": 1522,
+      "preview_path": "preview_frames/scene_10_golden.jpg",
+      "fields": [
+        {
+          "id": "field_10_1",
+          "label": "Venue 1: Ms. Jatin Trading Co, ",
+          "value": "Ms. Jatin Trading Co, Kalayat",
+          "default_value": "Ms. Jatin Trading Co, Kalayat",
+          "type": "venue",
+          "box": [
+            0.412,
+            0.257,
+            0.188,
+            0.031
+          ],
+          "x_percent": 50.6,
+          "y_percent": 27.2,
+          "font_size": 22,
+          "color": "#7fa5a1",
+          "align": "center"
+        },
+        {
+          "id": "field_10_2",
+          "label": "Venue 2: M/s. Shiv Trading Co.,",
+          "value": "M/s. Shiv Trading Co., Chandigarh",
+          "default_value": "M/s. Shiv Trading Co., Chandigarh",
+          "type": "venue",
+          "box": [
+            0.2,
+            0.321,
+            0.6,
+            0.052
+          ],
+          "x_percent": 50.0,
+          "y_percent": 34.7,
+          "font_size": 35,
+          "color": "#87a9a6",
+          "align": "center"
+        },
+        {
+          "id": "field_10_3",
+          "label": "Title 3: With Best Compliments ",
+          "value": "With Best Compliments From",
+          "default_value": "With Best Compliments From",
+          "type": "title",
+          "box": [
+            0.225,
+            0.432,
+            0.55,
+            0.031
+          ],
+          "x_percent": 50.0,
+          "y_percent": 44.7,
+          "font_size": 22,
+          "color": "#86a5a3",
+          "align": "center"
+        },
+        {
+          "id": "field_10_4",
+          "label": "Names 4: Kuldeep Singla",
+          "value": "Kuldeep Singla",
+          "default_value": "Kuldeep Singla",
+          "type": "names",
+          "box": [
+            0.383,
+            0.483,
+            0.25,
+            0.027
+          ],
+          "x_percent": 50.8,
+          "y_percent": 49.6,
+          "font_size": 22,
+          "color": "#769a97",
+          "align": "left"
+        },
+        {
+          "id": "field_10_5",
+          "label": "Names 5: Jatin Singla",
+          "value": "Jatin Singla",
+          "default_value": "Jatin Singla",
+          "type": "names",
+          "box": [
+            0.388,
+            0.538,
+            0.246,
+            0.05
+          ],
+          "x_percent": 51.0,
+          "y_percent": 56.3,
+          "font_size": 34,
+          "color": "#80a29f",
+          "align": "left"
+        }
+      ]
+    }
+  ],
+  "clean_video": "clean_base.mp4"
+}

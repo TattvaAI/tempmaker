@@ -6,52 +6,125 @@
   <title>StudioMotion • Universal Video Template Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Great+Vibes&family=Noto+Sans+Devanagari:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Rozha+One&family=Yatra+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="header-left">
-      <div class="logo">
-        <span class="logo-icon">✦</span>
-        <h1>StudioMotion</h1>
-      </div>
-      <span class="badge">Universal Video Template Maker</span>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="header-brand" id="brandHome" title="Go to Dashboard">
+      <span class="brand-sparkle">✦</span>
+      <span class="brand-title">StudioMotion</span>
+      <span class="brand-tag">PRO</span>
     </div>
 
-    <div class="header-center">
-      <div class="template-selector-wrap">
-        <label for="templateSelect">Template:</label>
-        <select id="templateSelect" class="template-select">
-          <option value="">Loading templates...</option>
-        </select>
-      </div>
+    <!-- Active Template Breadcrumb (Shown in Editor) -->
+    <div class="header-center hidden" id="headerBreadcrumb">
+      <button class="btn btn-ghost btn-sm" id="btnBackToDashboard">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+        Projects
+      </button>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current" id="headerProjectName">Project</span>
     </div>
 
     <div class="header-actions">
-      <button class="btn btn-secondary" id="btnUploadModal">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Create Template from Video
-      </button>
-      <button class="btn btn-secondary" id="btnSave">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Save
-      </button>
-      <button class="btn btn-primary" id="btnRender">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        Export Final Video
-      </button>
+      <!-- Actions in Dashboard -->
+      <div class="dashboard-actions" id="dashboardActions">
+        <button class="btn btn-primary" id="btnHeaderNewProject">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Template
+        </button>
+      </div>
+
+      <!-- Actions in Editor -->
+      <div class="editor-actions hidden" id="editorActions">
+        <button class="btn btn-secondary" id="btnSave">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save
+        </button>
+        <button class="btn btn-primary" id="btnRender">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Export Video
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="app-layout">
+  <!-- ============================================================ -->
+  <!-- 1. DASHBOARD VIEW (DEFAULT ON STARTUP)                         -->
+  <!-- ============================================================ -->
+  <main class="dashboard-container" id="dashboardView">
+    <!-- Hero / Upload Ingestion Card -->
+    <section class="ingestion-section">
+      <div class="ingestion-card">
+        <div class="ingestion-header">
+          <div class="ingestion-badge">AI Template Engine</div>
+          <h2>Create Template from Any Video</h2>
+          <p class="text-secondary">
+            Drop any motion invitation, announcement, or promo video. Powered by <strong>NVIDIA NIM Vision AI</strong>,
+            scenes are detected, text is extracted with perfect Hindi & English transcription, and original text is erased for seamless re-editing.
+          </p>
+        </div>
+
+        <div class="dropzone" id="dashboardDropzone">
+          <input type="file" id="dashboardFileInput" accept="video/mp4,video/quicktime,video/mov" class="file-input">
+          <div class="dropzone-content">
+            <div class="upload-icon-circle">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <h3>Drag & drop video here, or <span class="browse-link">browse files</span></h3>
+            <p class="dropzone-hint">Supports MP4, MOV • Up to 500 MB</p>
+          </div>
+          <div class="file-selected-indicator hidden" id="fileSelectedIndicator">
+            <div class="selected-file-info">
+              <span class="file-icon">🎬</span>
+              <span class="file-name" id="selectedFileName">video.mp4</span>
+              <span class="file-size text-secondary" id="selectedFileSize">0 MB</span>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btnStartProcessing">Start AI Analysis</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Templates Library Section -->
+    <section class="library-section">
+      <div class="library-header">
+        <div class="library-title-group">
+          <h2>Your Templates</h2>
+          <span class="count-pill" id="templatesCount">0 projects</span>
+        </div>
+        <div class="library-filter">
+          <input type="text" id="projectSearch" class="search-input" placeholder="Search templates...">
+        </div>
+      </div>
+
+      <div class="templates-grid" id="templatesGrid">
+        <!-- Dynamic Project Cards inserted via app.js -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-library hidden" id="emptyLibrary">
+        <div class="empty-icon">📁</div>
+        <h3>No video templates yet</h3>
+        <p class="text-secondary">Upload your first MP4 or MOV video above to create a reusable template in seconds.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- 2. STUDIO EDITOR VIEW (SHOWN ONLY WHEN TEMPLATE OPENED)      -->
+  <!-- ============================================================ -->
+  <main class="editor-layout hidden" id="editorView">
     <!-- Left Panel: Scene Navigation & Dynamic Form Fields -->
-    <aside class="sidebar">
+    <aside class="editor-sidebar">
       <div class="sidebar-header">
-        <h2 id="templateTitle">Loading...</h2>
-        <p id="templateSubtitle" class="text-muted">Select a scene to customize its text.</p>
+        <div class="sidebar-title-row">
+          <h2 id="templateTitle" contenteditable="true" spellcheck="false" title="Click to rename">Loading...</h2>
+          <span class="edit-hint-icon" title="Editable title">✎</span>
+        </div>
+        <p id="templateSubtitle" class="text-secondary">Select a scene to customize its text and styles.</p>
       </div>
 
       <!-- Scenes Horizontal Scroller / Tabs -->
@@ -61,10 +134,17 @@
         </div>
       </div>
 
-      <!-- Dynamic Fields for Selected Scene -->
-      <div class="fields-container" id="fieldsContainer">
-        <div class="empty-state">
-          <p>Select a scene above to edit its text elements.</p>
+      <!-- Scene Fields Container -->
+      <div class="fields-section">
+        <div class="fields-header">
+          <h3 id="activeSceneTitle">Scene 1 Elements</h3>
+          <button class="btn btn-ghost btn-xs" id="btnAddField">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Text
+          </button>
+        </div>
+        <div class="fields-container" id="fieldsContainer">
+          <!-- Dynamic Field Cards -->
         </div>
       </div>
     </aside>
@@ -73,8 +153,14 @@
     <section class="preview-panel">
       <div class="preview-toolbar">
         <div class="preview-mode-switch">
-          <button class="mode-btn active" id="btnModePreview">Live Frame Preview</button>
-          <button class="mode-btn" id="btnModeVideo">Video Player</button>
+          <button class="mode-btn active" id="btnModePreview">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Live Canvas
+          </button>
+          <button class="mode-btn" id="btnModeVideo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Video Player
+          </button>
         </div>
         <div class="preview-info" id="previewMeta">Frame 0</div>
         <div class="toolbar-right">
@@ -86,11 +172,17 @@
       </div>
 
       <div class="preview-viewport">
-        <!-- Live Frame Canvas -->
+        <!-- Live Frame Canvas View with Bounding Box Overlay Layer -->
         <div class="frame-view" id="frameView">
-          <img id="previewImage" src="" alt="Frame Preview">
+          <div class="canvas-wrapper" id="canvasWrapper">
+            <img id="previewImage" src="" alt="Frame Preview">
+            <div class="overlay-layer" id="overlayLayer">
+              <!-- Dynamic interactive bounding box markers -->
+            </div>
+          </div>
           <div class="preview-loader" id="previewLoader">
             <div class="spinner"></div>
+            <span class="loader-text">Updating frame preview...</span>
           </div>
         </div>
 
@@ -112,30 +204,23 @@
     </section>
   </main>
 
-  <!-- Upload Modal -->
-  <div class="modal-backdrop hidden" id="uploadModal">
+  <!-- ============================================================ -->
+  <!-- MODALS & DIALOGS                                            -->
+  <!-- ============================================================ -->
+
+  <!-- Pipeline Processing Modal -->
+  <div class="modal-backdrop hidden" id="pipelineModal">
     <div class="modal-card">
       <div class="modal-header">
-        <h3>Create Template from Any Video</h3>
-        <button class="modal-close" id="btnCloseUploadModal">&times;</button>
+        <h3>Analyzing & Inpainting Video</h3>
       </div>
-
       <div class="modal-body">
-        <p class="modal-desc">
-          Drop any animated announcement, invitation, or motion graphics video. Our AI engine will automatically detect scene boundaries, extract text with Apple Vision OCR, erase original text via inpainting, and generate an editable template.
+        <p class="modal-desc text-secondary">
+          Our AI pipeline is detecting scene boundaries, extracting text elements with NVIDIA NIM Vision,
+          and erasing background text.
         </p>
 
-        <div class="dropzone" id="dropzone">
-          <input type="file" id="videoFileInput" accept="video/mp4,video/quicktime,video/mov" class="file-input">
-          <div class="dropzone-content">
-            <div class="upload-icon">🎬</div>
-            <h4>Drag & drop video here, or <span class="browse-link">browse files</span></h4>
-            <p class="text-muted">Supports MP4, MOV (up to 500 MB)</p>
-          </div>
-        </div>
-
-        <!-- Processing Steps Progress -->
-        <div class="pipeline-progress hidden" id="pipelineProgress">
+        <div class="pipeline-progress">
           <div class="progress-bar-track">
             <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
           </div>
@@ -147,27 +232,68 @@
           <ul class="steps-checklist">
             <li id="step1" class="step-item">
               <span class="step-icon">1</span>
-              <span>Scene Cut & Keyframe Detection</span>
+              <span>Scene Boundary & Keyframe Detection</span>
             </li>
             <li id="step2" class="step-item">
               <span class="step-icon">2</span>
-              <span>Native Vision OCR Text Recognition</span>
+              <span>NVIDIA NIM AI Vision (Hindi + English OCR)</span>
             </li>
             <li id="step3" class="step-item">
               <span class="step-icon">3</span>
-              <span>Parallel Background Text Inpainting</span>
+              <span>Multi-core Text Inpainting (Clean Plate)</span>
             </li>
             <li id="step4" class="step-item">
               <span class="step-icon">4</span>
-              <span>Dynamic Template Schema Generation</span>
+              <span>Dynamic Template Schema Assembly</span>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+  </div>
 
+  <!-- Render Modal -->
+  <div class="modal-backdrop hidden" id="renderModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="renderModalTitle">Rendering Video</h3>
+        <button class="modal-close" id="btnCloseRenderModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="render-progress-wrap" id="renderProgressWrap">
+          <div class="spinner-large"></div>
+          <p id="renderStepText" class="render-status-text">Compositing frames across parallel CPU cores...</p>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill animated" id="renderProgressFill" style="width: 25%"></div>
+          </div>
+        </div>
+
+        <div class="render-done-wrap hidden" id="renderDoneWrap">
+          <div class="done-icon">✓</div>
+          <h4>Your Video is Ready!</h4>
+          <p class="text-secondary">The customized video has been rendered with full typography and audio.</p>
+          <div class="render-modal-actions">
+            <button class="btn btn-secondary" id="btnPreviewRendered">Play in Studio</button>
+            <a class="btn btn-primary" id="btnDownloadRendered" href="#" target="_blank">Download MP4</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-backdrop hidden" id="deleteModal">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-header">
+        <h3>Delete Template?</h3>
+        <button class="modal-close" id="btnCloseDeleteModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-secondary">Are you sure you want to delete <strong id="deleteTemplateName">this template</strong>? This action will permanently remove all associated clean plates, scenes, and renderings.</p>
+      </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" id="btnCancelUpload">Cancel</button>
-        <button class="btn btn-primary" id="btnStartUpload" disabled>Start Template Generation</button>
+        <button class="btn btn-secondary" id="btnCancelDelete">Cancel</button>
+        <button class="btn btn-danger" id="btnConfirmDelete">Delete Project</button>
       </div>
     </div>
   </div>
