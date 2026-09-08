@@ -296,7 +296,8 @@ def render_worker(task):
     cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
     fps = cap.get(cv2.CAP_PROP_FPS)
 
-    part_file = f'tmp_render/part_{part_id:02d}.mp4'
+    os.makedirs(os.path.join(SCRIPT_DIR, 'tmp_render'), exist_ok=True)
+    part_file = os.path.join(SCRIPT_DIR, 'tmp_render', f'part_{part_id:02d}.mp4')
     out = cv2.VideoWriter(part_file, cv2.VideoWriter_fourcc(*'mp4v'), fps, (1080, 1920))
 
     for idx in range(start_frame, end_frame):
@@ -406,3 +407,217 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# -------------------------------------------------------------
+# Web Studio Integration
+# -------------------------------------------------------------
+CACHED_FONTS = None
+
+def get_cached_fonts():
+    global CACHED_FONTS
+    if CACHED_FONTS is None:
+        CACHED_FONTS = load_fonts()
+    return CACHED_FONTS
+
+def template_to_wedding_config(template_data):
+    cfg_file = os.path.join(SCRIPT_DIR, 'video_text.json')
+    if os.path.exists(cfg_file):
+        with open(cfg_file, 'r', encoding='utf-8') as f:
+            cfg = json.load(f)
+    else:
+        cfg = {}
+
+    if not template_data or not template_data.get('scenes'):
+        return cfg
+
+    field_map = {}
+    for sc in template_data.get('scenes', []):
+        for f in sc.get('fields', []):
+            field_map[f['id']] = f.get('value', '')
+
+    if 's2_initials' in field_map:
+        cfg.setdefault('scene_2_monogram', {})['initials'] = field_map['s2_initials']
+
+    if 's3_names' in field_map:
+        s3 = cfg.setdefault('scene_3_announcement', {})
+        s3['monogram'] = field_map.get('s3_monogram', s3.get('monogram', 'SM'))
+        s3['couple_names'] = field_map['s3_names']
+        s3['subtext'] = field_map.get('s3_subtext', s3.get('subtext', 'are getting married on ..'))
+        s3['date'] = field_map.get('s3_date', s3.get('date', '21st September 2026'))
+
+    if 's4_bride' in field_map or 's4_groom' in field_map:
+        s4 = cfg.setdefault('scene_4_invitation', {})
+        if 's4_shloka' in field_map: s4['shloka'] = field_map['s4_shloka']
+        if 's4_header1' in field_map: s4['header_line1'] = field_map['s4_header1']
+        if 's4_header2' in field_map: s4['header_line2'] = field_map['s4_header2']
+        if 's4_bride' in field_map: s4['bride_name'] = field_map['s4_bride']
+        if 's4_bride_parents_rel' in field_map: s4['bride_parents_relation'] = field_map['s4_bride_parents_rel']
+        if 's4_bride_parents1' in field_map: s4['bride_parents_line1'] = field_map['s4_bride_parents1']
+        if 's4_bride_parents2' in field_map: s4['bride_parents_line2'] = field_map['s4_bride_parents2']
+        if 's4_with' in field_map: s4['conjunction'] = field_map['s4_with']
+        if 's4_groom' in field_map: s4['groom_name'] = field_map['s4_groom']
+        if 's4_groom_parents_rel' in field_map: s4['groom_parents_relation'] = field_map['s4_groom_parents_rel']
+        if 's4_groom_parents1' in field_map: s4['groom_parents_line1'] = field_map['s4_groom_parents1']
+        if 's4_groom_parents2' in field_map: s4['groom_parents_line2'] = field_map['s4_groom_parents2']
+        if 's4_res_label' in field_map: s4['residence_label'] = field_map['s4_res_label']
+        if 's4_addr1' in field_map: s4['address_line1'] = field_map['s4_addr1']
+        if 's4_addr2' in field_map: s4['address_line2'] = field_map['s4_addr2']
+
+    if 's5_title' in field_map or 's5_date' in field_map:
+        s5 = cfg.setdefault('scene_5_haldi', {})
+        if 's5_header' in field_map: s5['header'] = field_map['s5_header']
+        if 's5_title' in field_map: s5['title'] = field_map['s5_title']
+        if 's5_date' in field_map: s5['date'] = field_map['s5_date']
+        if 's5_time' in field_map: s5['time'] = field_map['s5_time']
+        if 's5_venue_label' in field_map: s5['venue_label'] = field_map['s5_venue_label']
+        if 's5_venue_name' in field_map: s5['venue_name'] = field_map['s5_venue_name']
+        if 's5_addr1' in field_map: s5['address_line1'] = field_map['s5_addr1']
+        if 's5_addr2' in field_map: s5['address_line2'] = field_map['s5_addr2']
+
+    if 's6_bride' in field_map or 's6_date' in field_map:
+        s6 = cfg.setdefault('scene_6_mehendi', {})
+        if 's6_header' in field_map: s6['header'] = field_map['s6_header']
+        if 's6_title' in field_map: s6['title_line1'] = field_map['s6_title']
+        if 's6_bride' in field_map: s6['bride_name'] = field_map['s6_bride']
+        if 's6_date' in field_map: s6['date'] = field_map['s6_date']
+        if 's6_time' in field_map: s6['time'] = field_map['s6_time']
+        if 's6_venue' in field_map: s6['venue_name'] = field_map['s6_venue']
+        if 's6_addr1' in field_map: s6['address_line1'] = field_map['s6_addr1']
+        if 's6_addr2' in field_map: s6['address_line2'] = field_map['s6_addr2']
+
+    if 's7_hindi' in field_map or 's7_date_time' in field_map:
+        s7 = cfg.setdefault('scene_7_sangeet', {})
+        if 's7_header1' in field_map: s7['header_line1'] = field_map['s7_header1']
+        if 's7_header2' in field_map: s7['header_line2'] = field_map['s7_header2']
+        if 's7_hindi' in field_map: s7['event_name_hindi'] = field_map['s7_hindi']
+        if 's7_sub' in field_map: s7['sub_header'] = field_map['s7_sub']
+        if 's7_bride' in field_map: s7['bride_name'] = field_map['s7_bride']
+        if 's7_date_time' in field_map: s7['date'] = field_map['s7_date_time']
+        if 's7_venue1' in field_map: s7['venue_label'] = field_map['s7_venue1']
+        if 's7_venue2' in field_map: s7['venue_name'] = field_map['s7_venue2']
+
+    if 's8_mandha_title' in field_map or 's8_wedding_title' in field_map:
+        s8 = cfg.setdefault('scene_8_mandha', {})
+        if 's8_mandha_title' in field_map: s8['title'] = field_map['s8_mandha_title']
+        if 's8_date_header' in field_map: s8['date'] = field_map['s8_date_header']
+        if 's8_mandha_time' in field_map: s8['time'] = field_map['s8_mandha_time']
+        if 's8_mandha_v1' in field_map: s8['venue_name'] = field_map['s8_mandha_v1']
+        if 's8_mandha_v2' in field_map: s8['address'] = field_map['s8_mandha_v2']
+
+        s9 = cfg.setdefault('scene_9_wedding', {})
+        if 's8_wedding_title' in field_map: s9['title'] = field_map['s8_wedding_title']
+        if 's9_wedding_date' in field_map: s9['date'] = field_map['s9_wedding_date']
+        elif 's8_date_header' in field_map: s9['date'] = field_map['s8_date_header']
+        if 's8_wedding_time' in field_map: s9['time'] = field_map['s8_wedding_time']
+        if 's8_wedding_v1' in field_map: s9['venue_name'] = field_map['s8_wedding_v1']
+        if 's8_wedding_v2' in field_map: s9['address'] = field_map['s8_wedding_v2']
+
+    if 's9_title' in field_map or 's9_date' in field_map or 's10_rsvp_label' in field_map:
+        s10 = cfg.setdefault('scene_10_closing', {})
+        if 's9_title' in field_map: s10['title'] = field_map['s9_title']
+        if 's9_date' in field_map: s10['date'] = field_map['s9_date']
+        if 's10_rsvp_label' in field_map: s10['rsvp_label'] = field_map['s10_rsvp_label']
+        if 's10_rsvp_text' in field_map: s10['rsvp_text'] = field_map['s10_rsvp_text']
+
+    return cfg
+
+_CURRENT_SHLOKA = None
+
+def get_shloka_image(shloka_text):
+    global _CURRENT_SHLOKA
+    if not shloka_text:
+        return None
+    shloka_png = os.path.join(SCRIPT_DIR, 'tmp_render', 'shloka.png')
+    render_text_bin = os.path.join(SCRIPT_DIR, 'bin', 'render_text')
+    if os.path.exists(render_text_bin):
+        if _CURRENT_SHLOKA != shloka_text or not os.path.exists(shloka_png):
+            os.makedirs(os.path.join(SCRIPT_DIR, 'tmp_render'), exist_ok=True)
+            try:
+                subprocess.run([
+                    render_text_bin,
+                    shloka_text,
+                    'Rozha One',
+                    '42',
+                    '214,123,39',
+                    shloka_png
+                ], check=True, timeout=3)
+                _CURRENT_SHLOKA = shloka_text
+            except Exception:
+                pass
+    if os.path.exists(shloka_png):
+        try:
+            return Image.open(shloka_png).convert('RGBA')
+        except Exception:
+            return None
+    return None
+
+def render_wedding_frame(base_bgr, frame_idx, template_data):
+    cfg = template_to_wedding_config(template_data)
+    fonts = get_cached_fonts()
+    shloka_text = cfg.get('scene_4_invitation', {}).get('shloka', '')
+    shloka_img = get_shloka_image(shloka_text)
+    return render_frame_text(base_bgr, frame_idx, cfg, fonts, shloka_img=shloka_img)
+
+def render_wedding_video_from_template(template_data, clean_video, output_file, num_workers=None):
+    if num_workers is None:
+        num_workers = min(8, mp.cpu_count() or 4)
+
+    cfg = template_to_wedding_config(template_data)
+    tmp_config_path = os.path.join(SCRIPT_DIR, 'tmp_render', 'active_wedding_config.json')
+    os.makedirs(os.path.join(SCRIPT_DIR, 'tmp_render'), exist_ok=True)
+    with open(tmp_config_path, 'w', encoding='utf-8') as f:
+        json.dump(cfg, f, indent=2, ensure_ascii=False)
+
+    shloka_text = cfg.get('scene_4_invitation', {}).get('shloka', '')
+    get_shloka_image(shloka_text)
+
+    cap = cv2.VideoCapture(clean_video)
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    cap.release()
+
+    chunk_size = (total_frames + num_workers - 1) // num_workers
+    tasks = []
+    for i in range(num_workers):
+        s = i * chunk_size
+        e = min((i + 1) * chunk_size, total_frames)
+        if s < total_frames:
+            tasks.append((i, s, e, tmp_config_path, clean_video))
+
+    print(f"[*] Rendering {total_frames} frames across {len(tasks)} parallel workers with master wedding engine...")
+    with mp.Pool(len(tasks)) as pool:
+        part_files = pool.map(render_worker, tasks)
+
+    concat_list = os.path.join(SCRIPT_DIR, 'tmp_render', 'concat_list.txt')
+    with open(concat_list, 'w') as f:
+        for p in part_files:
+            f.write(f"file '{os.path.abspath(p)}'\n")
+
+    cmd = [
+        'ffmpeg', '-y',
+        '-f', 'concat', '-safe', '0',
+        '-i', concat_list,
+        '-i', clean_video,
+        '-map', '0:v:0',
+        '-map', '1:a:0?',
+        '-c:v', 'libx264',
+        '-pix_fmt', 'yuv420p',
+        '-preset', 'veryfast',
+        '-crf', '18',
+        '-c:a', 'copy',
+        output_file
+    ]
+    subprocess.run(cmd, check=True)
+
+    for p in part_files:
+        if os.path.exists(p):
+            try:
+                os.remove(p)
+            except Exception:
+                pass
+    if os.path.exists(concat_list):
+        try:
+            os.remove(concat_list)
+        except Exception:
+            pass
+    return output_file

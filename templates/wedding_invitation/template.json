@@ -20,7 +20,7 @@
       ],
       "name": "Scene 2: Monogram Crest",
       "preview_frame": 210,
-      "preview_path": "preview_frames/final_scene_2.jpg",
+      "preview_path": "preview_frames/scene_2.jpg",
       "scene_id": "scene_2",
       "scene_num": 2,
       "start_frame": 170
@@ -31,14 +31,14 @@
         {
           "align": "center",
           "color": "#1e3f78",
+          "default_value": "SM",
           "font_size": 52,
           "id": "s3_monogram",
           "label": "Top Monogram Initials",
           "type": "title",
-          "value": "SM",
+          "value": "With blessing of almighty",
           "x_percent": 50,
-          "y_percent": 7.8,
-          "default_value": "SM"
+          "y_percent": 7.8
         },
         {
           "align": "center",
@@ -76,7 +76,7 @@
       ],
       "name": "Scene 3: Announcement",
       "preview_frame": 360,
-      "preview_path": "preview_frames/final_scene_3.jpg",
+      "preview_path": "preview_frames/scene_3.jpg",
       "scene_id": "scene_3",
       "scene_num": 3,
       "start_frame": 300
@@ -85,189 +85,189 @@
       "end_frame": 760,
       "fields": [
         {
+          "align": "center",
+          "color": "#d67b27",
+          "default_value": "॥ श्री गणेशाय नमः ॥",
+          "font_size": 42,
           "id": "s4_shloka",
           "label": "Auspicious Sanskrit Shloka",
           "type": "title",
           "value": "॥ श्री गणेशाय नमः ॥",
-          "default_value": "॥ श्री गणेशाय नमः ॥",
-          "font_size": 42,
-          "color": "#d67b27",
           "x_percent": 50,
-          "y_percent": 10.4,
-          "align": "center"
+          "y_percent": 10.4
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "Together with their families",
+          "font_size": 38,
           "id": "s4_header1",
           "label": "Invitation Header Line 1",
           "type": "text",
           "value": "Together with their families",
-          "default_value": "Together with their families",
-          "font_size": 38,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 13.5,
-          "align": "center"
+          "y_percent": 13.5
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "cordially invite you to celebrate the wedding ceremony of their daughter",
+          "font_size": 34,
           "id": "s4_header2",
           "label": "Invitation Header Line 2",
           "type": "text",
-          "value": "cordially invite you to celebrate the wedding ceremony of their daughter",
-          "default_value": "cordially invite you to celebrate the wedding ceremony of their daughter",
-          "font_size": 34,
-          "color": "#2c5e54",
+          "value": "cordially invite you to celebrate \nthe wedding ceremony of their daughter",
           "x_percent": 50,
-          "y_percent": 16.5,
-          "align": "center"
+          "y_percent": 16.5
         },
         {
+          "align": "center",
+          "color": "#d82672",
+          "default_value": "Muskan",
+          "font_size": 120,
           "id": "s4_bride",
           "label": "Bride Name",
           "type": "names",
           "value": "Muskan",
-          "default_value": "Muskan",
-          "font_size": 120,
-          "color": "#d82672",
           "x_percent": 50,
-          "y_percent": 24.0,
-          "align": "center"
+          "y_percent": 24
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "D/o",
+          "font_size": 34,
           "id": "s4_bride_parents_rel",
           "label": "Bride Relation",
           "type": "text",
           "value": "D/o",
-          "default_value": "D/o",
-          "font_size": 34,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 28.5,
-          "align": "center"
+          "y_percent": 28.5
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "Mrs. Pammi Mittal &",
+          "font_size": 38,
           "id": "s4_bride_parents1",
           "label": "Bride Mother",
           "type": "text",
           "value": "Mrs. Pammi Mittal &",
-          "default_value": "Mrs. Pammi Mittal &",
-          "font_size": 38,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 31.5,
-          "align": "center"
+          "y_percent": 31.5
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "Late Mr. Ashok Kumar Mittal",
+          "font_size": 38,
           "id": "s4_bride_parents2",
           "label": "Bride Father",
           "type": "text",
           "value": "Late Mr. Ashok Kumar Mittal",
-          "default_value": "Late Mr. Ashok Kumar Mittal",
-          "font_size": 38,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 34.5,
-          "align": "center"
+          "y_percent": 34.5
         },
         {
+          "align": "center",
+          "color": "#1e3c34",
+          "default_value": "With",
+          "font_size": 42,
           "id": "s4_with",
           "label": "Conjunction",
           "type": "text",
           "value": "With",
-          "default_value": "With",
-          "font_size": 42,
-          "color": "#1e3c34",
           "x_percent": 50,
-          "y_percent": 39.0,
-          "align": "center"
+          "y_percent": 39
         },
         {
+          "align": "center",
+          "color": "#d82672",
+          "default_value": "Shubham",
+          "font_size": 120,
           "id": "s4_groom",
           "label": "Groom Name",
           "type": "names",
           "value": "Shubham",
-          "default_value": "Shubham",
-          "font_size": 120,
-          "color": "#d82672",
           "x_percent": 50,
-          "y_percent": 46.5,
-          "align": "center"
+          "y_percent": 46.5
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "S/o",
+          "font_size": 34,
           "id": "s4_groom_parents_rel",
           "label": "Groom Relation",
           "type": "text",
           "value": "S/o",
-          "default_value": "S/o",
-          "font_size": 34,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 51.0,
-          "align": "center"
+          "y_percent": 51
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "Mrs. Uma Garg &",
+          "font_size": 38,
           "id": "s4_groom_parents1",
           "label": "Groom Mother",
           "type": "text",
-          "value": "Mrs. Uma Garg &",
-          "default_value": "Mrs. Uma Garg &",
-          "font_size": 38,
-          "color": "#2c5e54",
+          "value": "Late Mrs. Uma Garg &",
           "x_percent": 50,
-          "y_percent": 54.0,
-          "align": "center"
+          "y_percent": 54
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "Lala Satish Kumar Garg",
+          "font_size": 38,
           "id": "s4_groom_parents2",
           "label": "Groom Father",
           "type": "text",
-          "value": "Lala Satish Kumar Garg",
-          "default_value": "Lala Satish Kumar Garg",
-          "font_size": 38,
-          "color": "#2c5e54",
+          "value": "Mr. Satish Kumar Garg",
           "x_percent": 50,
-          "y_percent": 57.0,
-          "align": "center"
+          "y_percent": 57
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "Residence:",
+          "font_size": 38,
           "id": "s4_res_label",
           "label": "Residence Label",
           "type": "venue",
           "value": "Residence:",
-          "default_value": "Residence:",
-          "font_size": 38,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 62.0,
-          "align": "center"
+          "y_percent": 62
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "#620/A-61, Shalimar Vihar,",
+          "font_size": 36,
           "id": "s4_addr1",
           "label": "Residence Address Line 1",
           "type": "venue",
           "value": "#620/A-61, Shalimar Vihar,",
-          "default_value": "#620/A-61, Shalimar Vihar,",
-          "font_size": 36,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 65.0,
-          "align": "center"
+          "y_percent": 65
         },
         {
+          "align": "center",
+          "color": "#2c5e54",
+          "default_value": "Jain College Road, Ambala City",
+          "font_size": 36,
           "id": "s4_addr2",
           "label": "Residence Address Line 2",
           "type": "venue",
           "value": "Jain College Road, Ambala City",
-          "default_value": "Jain College Road, Ambala City",
-          "font_size": 36,
-          "color": "#2c5e54",
           "x_percent": 50,
-          "y_percent": 68.0,
-          "align": "center"
+          "y_percent": 68
         }
       ],
       "name": "Scene 4: Formal Invitation",
-      "preview_frame": 600,
-      "preview_path": "preview_frames/final_scene_4.jpg",
+      "preview_frame": 620,
+      "preview_path": "preview_frames/scene_4.jpg",
       "scene_id": "scene_4",
       "scene_num": 4,
       "start_frame": 415
@@ -365,8 +365,8 @@
         }
       ],
       "name": "Scene 5: Haldi Ceremony",
-      "preview_frame": 750,
-      "preview_path": "preview_frames/final_scene_5.jpg",
+      "preview_frame": 850,
+      "preview_path": "preview_frames/scene_5.jpg",
       "scene_id": "scene_5",
       "scene_num": 5,
       "start_frame": 780
@@ -464,8 +464,8 @@
         }
       ],
       "name": "Scene 6: Mehendi Ceremony",
-      "preview_frame": 950,
-      "preview_path": "preview_frames/final_scene_6.jpg",
+      "preview_frame": 1030,
+      "preview_path": "preview_frames/scene_6.jpg",
       "scene_id": "scene_6",
       "scene_num": 6,
       "start_frame": 965
@@ -563,166 +563,210 @@
         }
       ],
       "name": "Scene 7: Ladies Sangeet",
-      "preview_frame": 1150,
-      "preview_path": "preview_frames/final_scene_7.jpg",
+      "preview_frame": 1180,
+      "preview_path": "preview_frames/scene_7.jpg",
       "scene_id": "scene_7",
       "scene_num": 7,
       "start_frame": 1115
     },
     {
-      "end_frame": 1425,
-      "fields": [
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 38,
-          "id": "s8_date_header",
-          "label": "Ceremonies Date",
-          "type": "date",
-          "value": "Monday, 21 September 2026",
-          "x_percent": 50,
-          "y_percent": 14
-        },
-        {
-          "align": "center",
-          "color": "#a41e56",
-          "font_size": 105,
-          "id": "s8_mandha_title",
-          "label": "Mandha Title",
-          "type": "title",
-          "value": "Mandha Ceremony",
-          "x_percent": 50,
-          "y_percent": 19.2
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 38,
-          "id": "s8_mandha_time",
-          "label": "Mandha Time",
-          "type": "time",
-          "value": "Lunch 11:30 AM",
-          "x_percent": 50,
-          "y_percent": 23.1
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 32,
-          "id": "s8_mandha_v1",
-          "label": "Mandha Venue",
-          "type": "venue",
-          "value": "Kali Mata Mandir Auditorium",
-          "x_percent": 50,
-          "y_percent": 26
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 32,
-          "id": "s8_mandha_v2",
-          "label": "Mandha Address",
-          "type": "venue",
-          "value": "Jain College Road, Ambala City",
-          "x_percent": 50,
-          "y_percent": 28.3
-        },
-        {
-          "align": "center",
-          "color": "#a41e56",
-          "font_size": 105,
-          "id": "s8_wedding_title",
-          "label": "Wedding Title",
-          "type": "title",
-          "value": "Wedding Ceremony",
-          "x_percent": 50,
-          "y_percent": 35.1
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 38,
-          "id": "s8_wedding_time",
-          "label": "Wedding Time",
-          "type": "time",
-          "value": "7:00 PM Onwards",
-          "x_percent": 50,
-          "y_percent": 39
-        },
-        {
-          "align": "center",
-          "color": "#a41e56",
-          "font_size": 38,
-          "id": "s8_wedding_v1",
-          "label": "Wedding Venue Name",
-          "type": "venue",
-          "value": "Venue: The Divine",
-          "x_percent": 50,
-          "y_percent": 41.9
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 32,
-          "id": "s8_wedding_v2",
-          "label": "Wedding Venue Address",
-          "type": "venue",
-          "value": "Meerut Road, Karnal, Haryana-132001",
-          "x_percent": 50,
-          "y_percent": 44.5
-        }
-      ],
-      "name": "Scene 8: Mandha & Wedding Ceremonies",
-      "preview_frame": 1350,
-      "preview_path": "preview_frames/final_scene_8.jpg",
       "scene_id": "scene_8",
       "scene_num": 8,
-      "start_frame": 1270
-    },
-    {
-      "end_frame": 1560,
+      "name": "Scene 8: Mandha Ceremony",
+      "start_frame": 1270,
+      "end_frame": 1425,
+      "preview_frame": 1350,
+      "preview_path": "preview_frames/scene_8.jpg",
       "fields": [
         {
-          "align": "center",
-          "color": "#134b8e",
-          "font_size": 130,
-          "id": "s9_title",
-          "label": "Closing Title",
+          "id": "s8_mandha_title",
+          "label": "Mandha Title",
+          "value": "Mandha Ceremony",
           "type": "title",
-          "value": "Save The Date",
+          "font_size": 105,
+          "color": "#a41e56",
+          "align": "center",
           "x_percent": 50,
-          "y_percent": 35.9
+          "y_percent": 26.0
         },
         {
-          "align": "center",
-          "color": "#134b8e",
-          "font_size": 52,
-          "id": "s9_date",
-          "label": "Date",
+          "id": "s8_date_header",
+          "label": "Ceremonies Date",
+          "value": "Monday, 21 September 2026",
           "type": "date",
-          "value": "21st September 2026",
+          "font_size": 38,
+          "color": "#2b442a",
+          "align": "center",
           "x_percent": 50,
-          "y_percent": 43.2
+          "y_percent": 34.9
+        },
+        {
+          "id": "s8_mandha_time",
+          "label": "Mandha Time",
+          "value": "Mandha 10:00 AM\nLunch 11:30 AM",
+          "type": "time",
+          "font_size": 38,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 41.1
+        },
+        {
+          "id": "s8_mandha_v1",
+          "label": "Mandha Venue",
+          "value": "Kali Mata Mandir Auditorium",
+          "type": "venue",
+          "font_size": 46,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 51.6
+        },
+        {
+          "id": "s8_mandha_v2",
+          "label": "Mandha Address",
+          "value": "Jain College Road, Ambala City",
+          "type": "venue",
+          "font_size": 36,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 55.0
         }
-      ],
-      "name": "Scene 9: Closing Save The Date",
-      "preview_frame": 1500,
-      "preview_path": "preview_frames/final_scene_9.jpg",
+      ]
+    },
+    {
       "scene_id": "scene_9",
       "scene_num": 9,
-      "start_frame": 1455
+      "name": "Scene 9: Wedding Ceremony",
+      "start_frame": 1464,
+      "end_frame": 1619,
+      "preview_frame": 1530,
+      "preview_path": "preview_frames/scene_9.jpg",
+      "fields": [
+        {
+          "id": "s8_wedding_title",
+          "label": "Wedding Ceremony Title",
+          "value": "Wedding Ceremony",
+          "type": "title",
+          "font_size": 105,
+          "color": "#a41e56",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 26.0
+        },
+        {
+          "id": "s9_wedding_date",
+          "label": "Wedding Date",
+          "value": "Monday, 21 September 2026",
+          "type": "date",
+          "font_size": 38,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 34.9
+        },
+        {
+          "id": "s8_wedding_time",
+          "label": "Wedding Time",
+          "value": "7:00 PM Onwards",
+          "type": "time",
+          "font_size": 38,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 41.1
+        },
+        {
+          "id": "s8_wedding_v1",
+          "label": "Wedding Venue Name",
+          "value": "The Divine",
+          "type": "venue",
+          "font_size": 46,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 51.6
+        },
+        {
+          "id": "s8_wedding_v2",
+          "label": "Wedding Venue Address",
+          "value": "Meerut Road, Karnal, Haryana-132001",
+          "type": "venue",
+          "font_size": 36,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 55.0
+        }
+      ]
+    },
+    {
+      "scene_id": "scene_10",
+      "scene_num": 10,
+      "name": "Scene 10: Closing & RSVP",
+      "start_frame": 1649,
+      "end_frame": 1755,
+      "preview_frame": 1700,
+      "preview_path": "preview_frames/scene_10.jpg",
+      "fields": [
+        {
+          "id": "s9_title",
+          "label": "Closing Title",
+          "value": "Save The Date",
+          "type": "title",
+          "font_size": 130,
+          "color": "#134b8e",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 31.3
+        },
+        {
+          "id": "s9_date",
+          "label": "Wedding Date",
+          "value": "21st September 2026",
+          "type": "date",
+          "font_size": 52,
+          "color": "#134b8e",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 38.7
+        },
+        {
+          "id": "s10_rsvp_label",
+          "label": "RSVP Header",
+          "value": "RSVP",
+          "type": "title",
+          "font_size": 38,
+          "color": "#a41e56",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 46.9
+        },
+        {
+          "id": "s10_rsvp_text",
+          "label": "RSVP Family & Friends",
+          "value": "From Mittal Family & Friends",
+          "type": "names",
+          "font_size": 95,
+          "color": "#2b442a",
+          "align": "center",
+          "x_percent": 50,
+          "y_percent": 51.2
+        }
+      ]
     }
   ],
   "source_video": "A1.mp4",
   "template_id": "wedding_invitation",
   "thumbnail": "/api/templates/wedding_invitation/preview_frame/scene2.jpg",
   "title": "Royal Indian Wedding Invitation (Muskan & Shubham)",
-  "total_fields": 55,
+  "total_fields": 58,
   "video_info": {
-    "duration_sec": 52.1,
+    "duration_sec": 58.57,
     "fps": 30,
     "height": 1920,
-    "total_frames": 1563,
+    "total_frames": 1757,
     "width": 1080
   }
 }

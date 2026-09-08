@@ -18,6 +18,7 @@ from pipeline.scene_detector import detect_scenes
 from pipeline.template_generator import generate_template
 from pipeline.auto_inpaint import generate_clean_video
 from pipeline.universal_renderer import render_frame_with_template, render_template_video
+from render_video import render_wedding_frame, render_wedding_video_from_template
 
 app = Flask(__name__, static_folder="static")
 app.config["MAX_CONTENT_LENGTH"] = 500 * 1024 * 1024  # 500MB upload limit
@@ -78,7 +79,12 @@ def background_render_worker(template_id, template_dir):
         output_video_path = os.path.join(template_dir, "output.mp4")
         
         update_job(f"render_{template_id}", "rendering", "Rendering frames across CPU cores...", 40)
-        render_template_video(clean_video_path, template_json_path, output_video_path)
+        if template_id == "wedding_invitation":
+            with open(template_json_path, "r", encoding="utf-8") as f:
+                t_data = json.load(f)
+            render_wedding_video_from_template(t_data, clean_video_path, output_video_path)
+        else:
+            render_template_video(clean_video_path, template_json_path, output_video_path)
         
         update_job(f"render_{template_id}", "done", "Render completed successfully!", 100)
     except Exception as e:
@@ -228,7 +234,7 @@ def save_template(template_id):
         
     return jsonify({"status": "saved", "message": "Template changes saved"})
 
-@app.route("/api/templates/<template_id>/preview", methods=["GET"])
+@app.route("/api/templates/<template_id>/preview", methods=["GET", "POST"])
 def preview_frame(template_id):
     template_dir = os.path.join(TEMPLATES_DIR, template_id)
     t_path = os.path.join(template_dir, "template.json")
@@ -238,13 +244,27 @@ def preview_frame(template_id):
     with open(t_path, "r", encoding="utf-8") as f:
         template = json.load(f)
         
+    custom_template = False
+    frame_idx = None
+    scene_id = None
+    
+    if request.method == "POST" and request.is_json:
+        body = request.get_json(silent=True) or {}
+        if "template" in body and isinstance(body["template"], dict):
+            template = body["template"]
+            custom_template = True
+        frame_idx = body.get("frame")
+        scene_id = body.get("scene_id")
+        
+    if frame_idx is None:
+        frame_idx = request.args.get("frame", type=int)
+    if scene_id is None:
+        scene_id = request.args.get("scene_id")
+        
     clean_video_path = os.path.join(template_dir, "clean_base.mp4")
     if not os.path.exists(clean_video_path):
         clean_video_path = os.path.join(template_dir, "source.mp4")
         
-    frame_idx = request.args.get("frame", type=int)
-    scene_id = request.args.get("scene_id")
-    
     if frame_idx is None and scene_id:
         for sc in template.get("scenes", []):
             if sc["scene_id"] == scene_id:
@@ -254,7 +274,8 @@ def preview_frame(template_id):
     if frame_idx is None:
         frame_idx = 0
         
-    if scene_id:
+    # Only return static cached preview if NOT wedding_invitation and NOT custom/live preview
+    if not custom_template and template_id != "wedding_invitation" and scene_id and request.args.get("render") != "1":
         for sc in template.get("scenes", []):
             if sc["scene_id"] == scene_id and sc.get("preview_path"):
                 p = os.path.join(template_dir, sc["preview_path"]) if not os.path.isabs(sc["preview_path"]) else sc["preview_path"]
@@ -268,13 +289,15 @@ def preview_frame(template_id):
     cap.release()
     
     if not ret or frame is None:
-        # Generate dummy placeholder
         frame = np.zeros((1920, 1080, 3), dtype=np.uint8)
         
     w = int(template.get("video_info", {}).get("width", 1080))
     h = int(template.get("video_info", {}).get("height", 1920))
     
-    rendered = render_frame_with_template(frame, frame_idx, template.get("scenes", []), w, h)
+    if template_id == "wedding_invitation":
+        rendered = render_wedding_frame(frame, frame_idx, template)
+    else:
+        rendered = render_frame_with_template(frame, frame_idx, template.get("scenes", []), w, h)
     
     _, buffer = cv2.imencode(".jpg", rendered, [cv2.IMWRITE_JPEG_QUALITY, 90])
     return Response(buffer.tobytes(), mimetype="image/jpeg", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})

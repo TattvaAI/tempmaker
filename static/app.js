@@ -721,21 +721,47 @@ function triggerLivePreviewDebounced() {
   }, 120);
 }
 
+let currentPreviewAbortController = null;
+
 async function triggerLivePreview(showLoading = false) {
   if (!currentTemplateId) return;
   if (showLoading) showPreviewLoader(true);
 
-  // Auto-save active template state in memory
-  const previewUrl = `/api/templates/${currentTemplateId}/preview?frame=${currentFrameIdx}&scene_id=${activeSceneId || ""}&t=${Date.now()}`;
-  previewImage.src = previewUrl;
+  if (currentPreviewAbortController) {
+    try {
+      currentPreviewAbortController.abort();
+    } catch (_) {}
+  }
+  currentPreviewAbortController = new AbortController();
 
-  previewImage.onload = () => {
+  try {
+    const res = await fetch(`/api/templates/${currentTemplateId}/preview`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        frame: currentFrameIdx,
+        scene_id: activeSceneId || "",
+        template: currentTemplateData,
+      }),
+      signal: currentPreviewAbortController.signal,
+    });
+
+    if (res.ok) {
+      const blob = await res.blob();
+      const oldUrl = previewImage.src;
+      previewImage.src = URL.createObjectURL(blob);
+      if (oldUrl && oldUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(oldUrl);
+      }
+      previewMeta.textContent = `Frame ${currentFrameIdx} • ${formatTime(currentFrameIdx / 30)}`;
+    }
+  } catch (err) {
+    if (err.name !== "AbortError") {
+      console.warn("Live preview fetch failed:", err);
+    }
+  } finally {
     showPreviewLoader(false);
-    previewMeta.textContent = `Frame ${currentFrameIdx} • ${formatTime(currentFrameIdx / 30)}`;
-  };
-  previewImage.onerror = () => {
-    showPreviewLoader(false);
-  };
+  }
 }
 
 function showPreviewLoader(visible) {
