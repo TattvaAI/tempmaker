@@ -141,7 +141,7 @@ def render_worker(task):
     out.release()
     return part_file
 
-def render_template_video(clean_video_path, template_json_path, output_video_path, num_workers=None):
+def _do_render_template_video(clean_video_path, template_json_path, output_video_path, num_workers=None):
     if num_workers is None:
         num_workers = min(8, mp.cpu_count() or 4)
         
@@ -160,7 +160,7 @@ def render_template_video(clean_video_path, template_json_path, output_video_pat
         if s < total_frames:
             tasks.append((i, s, e, clean_video_path, template_json_path, tmp_dir))
             
-    print(f"[*] Rendering {total_frames} frames across {len(tasks)} parallel workers...")
+    print(f"[*] Rendering {total_frames} frames across {len(tasks)} parallel workers...", flush=True)
     t0 = time.time()
     with mp.Pool(processes=len(tasks)) as pool:
         part_files = pool.map(render_worker, tasks)
@@ -181,7 +181,7 @@ def render_template_video(clean_video_path, template_json_path, output_video_pat
         "-pix_fmt", "yuv420p",
         output_video_path
     ]
-    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(cmd, check=True)
     
     try:
         import shutil
@@ -190,5 +190,22 @@ def render_template_video(clean_video_path, template_json_path, output_video_pat
         pass
         
     render_time = round(time.time() - t0, 2)
-    print(f"[+] Render finished in {render_time}s: {output_video_path}")
+    print(f"[+] Render finished in {render_time}s: {output_video_path}", flush=True)
     return output_video_path
+
+def render_template_video(clean_video_path, template_json_path, output_video_path, num_workers=None):
+    cmd = [
+        sys.executable,
+        os.path.abspath(__file__),
+        os.path.abspath(clean_video_path),
+        os.path.abspath(template_json_path),
+        os.path.abspath(output_video_path)
+    ]
+    subprocess.run(cmd, check=True)
+    return output_video_path
+
+if __name__ == "__main__":
+    if len(sys.argv) >= 4:
+        _do_render_template_video(sys.argv[1], sys.argv[2], sys.argv[3])
+    else:
+        print("Usage: python universal_renderer.py <clean_video> <template_json> <output_video>")

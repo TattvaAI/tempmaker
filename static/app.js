@@ -821,6 +821,8 @@ async function triggerRender() {
   renderProgressWrap.classList.remove("hidden");
   renderDoneWrap.classList.add("hidden");
   renderStepText.textContent = "Starting parallel multi-core video renderer...";
+  const initialFill = document.getElementById("renderProgressFill");
+  if (initialFill) initialFill.style.width = "10%";
 
   try {
     // Save latest changes first
@@ -855,6 +857,10 @@ function pollRenderStatus(templateId) {
 
       if (r.status === "rendering") {
         renderStepText.textContent = r.step || "Rendering frames across CPU cores...";
+        const fill = document.getElementById("renderProgressFill");
+        if (fill && r.progress) {
+          fill.style.width = `${Math.min(100, Math.max(10, r.progress))}%`;
+        }
       } else if (r.status === "done") {
         clearInterval(renderPollInterval);
         renderProgressWrap.classList.add("hidden");

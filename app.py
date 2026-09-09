@@ -75,14 +75,19 @@ def background_render_worker(template_id, template_dir):
     try:
         update_job(f"render_{template_id}", "rendering", "Starting video rendering...", 10)
         clean_video_path = os.path.join(template_dir, "clean_base.mp4")
+        if not os.path.exists(clean_video_path):
+            clean_video_path = os.path.join(template_dir, "source.mp4")
         template_json_path = os.path.join(template_dir, "template.json")
         output_video_path = os.path.join(template_dir, "output.mp4")
         
-        update_job(f"render_{template_id}", "rendering", "Rendering frames across CPU cores...", 40)
+        def on_progress(pct):
+            update_job(f"render_{template_id}", "rendering", f"Rendering frames across CPU cores ({pct}%)...", pct)
+
+        update_job(f"render_{template_id}", "rendering", "Initializing multi-core render engine...", 15)
         if template_id == "wedding_invitation":
             with open(template_json_path, "r", encoding="utf-8") as f:
                 t_data = json.load(f)
-            render_wedding_video_from_template(t_data, clean_video_path, output_video_path)
+            render_wedding_video_from_template(t_data, clean_video_path, output_video_path, progress_callback=on_progress)
         else:
             render_template_video(clean_video_path, template_json_path, output_video_path)
         

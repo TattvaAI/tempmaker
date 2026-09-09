@@ -316,50 +316,50 @@ def main():
     parser.add_argument('--config', default='video_text.json', help='Path to configuration JSON file')
     parser.add_argument('--output', default='custom_invitation.mp4', help='Output video file path')
     parser.add_argument('--clean-video', default='clean_base.mp4', help='Clean background video path')
+    parser.add_argument('--template', help='Path to template.json file')
     args = parser.parse_args()
 
-    clean_video = os.path.join(SCRIPT_DIR, args.clean_video)
-    config_file = os.path.join(SCRIPT_DIR, args.config)
-    output_file = os.path.join(SCRIPT_DIR, args.output)
+    clean_video = args.clean_video if os.path.isabs(args.clean_video) else os.path.join(SCRIPT_DIR, args.clean_video)
+    config_file = args.config if os.path.isabs(args.config) else os.path.join(SCRIPT_DIR, args.config)
+    output_file = args.output if os.path.isabs(args.output) else os.path.join(SCRIPT_DIR, args.output)
+
+    if args.template:
+        template_file = args.template if os.path.isabs(args.template) else os.path.join(SCRIPT_DIR, args.template)
+        with open(template_file, 'r', encoding='utf-8') as f:
+            t_data = json.load(f)
+        cfg = template_to_wedding_config(t_data)
+        config_file = os.path.join(SCRIPT_DIR, 'tmp_render', 'active_wedding_config.json')
+        os.makedirs(os.path.join(SCRIPT_DIR, 'tmp_render'), exist_ok=True)
+        with open(config_file, 'w', encoding='utf-8') as f:
+            json.dump(cfg, f, indent=2, ensure_ascii=False)
 
     if not os.path.exists(clean_video):
-        print(f"Error: Base video '{clean_video}' not found!")
+        print(f"Error: Base video '{clean_video}' not found!", flush=True)
         sys.exit(1)
     if not os.path.exists(config_file):
-        print(f"Error: Config file '{config_file}' not found!")
+        print(f"Error: Config file '{config_file}' not found!", flush=True)
         sys.exit(1)
 
     t0 = time.time()
-    print(f"=== Rendering Wedding Invitation Video ===")
-    print(f"Config: {config_file}")
-    print(f"Output: {output_file}")
+    print(f"=== Rendering Wedding Invitation Video ===", flush=True)
+    print(f"Config: {config_file}", flush=True)
+    print(f"Output: {output_file}", flush=True)
+    print("[PROGRESS] 10", flush=True)
 
     os.makedirs(os.path.join(SCRIPT_DIR, 'tmp_render'), exist_ok=True)
-    with open(config_file) as f:
+    with open(config_file, 'r', encoding='utf-8') as f:
         cfg = json.load(f)
 
     shloka_text = cfg.get('scene_4_invitation', {}).get('shloka', '')
-    render_text_bin = os.path.join(SCRIPT_DIR, 'bin', 'render_text')
-    if os.path.exists(render_text_bin) and shloka_text:
-        try:
-            subprocess.run([
-                render_text_bin,
-                shloka_text,
-                'Rozha One',
-                '42',
-                '214,123,39',
-                os.path.join(SCRIPT_DIR, 'tmp_render', 'shloka.png')
-            ], check=True)
-        except Exception as e:
-            pass
+    get_shloka_image(shloka_text)
+    print("[PROGRESS] 25", flush=True)
 
     cap = cv2.VideoCapture(clean_video)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    fps = cap.get(cv2.CAP_PROP_FPS)
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
     cap.release()
 
-    os.makedirs('tmp_render', exist_ok=True)
-    num_workers = min(8, mp.cpu_count())
+    num_workers = min(8, mp.cpu_count() or 4)
     chunk_size = (total_frames + num_workers - 1) // num_workers
 
     tasks = []
@@ -369,23 +369,26 @@ def main():
         if s < total_frames:
             tasks.append((i, s, e, config_file, clean_video))
 
-    print(f"Rendering {total_frames} frames across {len(tasks)} parallel workers...")
-    with mp.Pool(num_workers) as pool:
+    print(f"[*] Rendering {total_frames} frames across {len(tasks)} parallel workers...", flush=True)
+    print("[PROGRESS] 40", flush=True)
+    with mp.Pool(len(tasks)) as pool:
         part_files = pool.map(render_worker, tasks)
 
-    print("Frames rendered! Assembling final MP4 with audio...")
-    concat_list = 'tmp_render/concat_list.txt'
+    print("[PROGRESS] 82", flush=True)
+    print("Frames rendered! Assembling final MP4 with audio...", flush=True)
+    concat_list = os.path.join(SCRIPT_DIR, 'tmp_render', 'concat_list.txt')
     with open(concat_list, 'w') as f:
         for p in part_files:
-            f.write(f"file '../{p}'\n")
+            f.write(f"file '{os.path.abspath(p)}'\n")
 
+    print("[PROGRESS] 88", flush=True)
     cmd = [
         'ffmpeg', '-y',
         '-f', 'concat', '-safe', '0',
         '-i', concat_list,
         '-i', clean_video,
         '-map', '0:v:0',
-        '-map', '1:a:0',
+        '-map', '1:a:0?',
         '-c:v', 'libx264',
         '-pix_fmt', 'yuv420p',
         '-preset', 'veryfast',
@@ -394,19 +397,24 @@ def main():
         output_file
     ]
     subprocess.run(cmd, check=True)
+    print("[PROGRESS] 98", flush=True)
 
     # Clean up temp parts
     for p in part_files:
         if os.path.exists(p):
-            os.remove(p)
+            try:
+                os.remove(p)
+            except Exception:
+                pass
     if os.path.exists(concat_list):
-        os.remove(concat_list)
+        try:
+            os.remove(concat_list)
+        except Exception:
+            pass
 
     elapsed = time.time() - t0
-    print(f"\nSUCCESS! Video saved to '{output_file}' in {elapsed:.2f} seconds.")
-
-if __name__ == '__main__':
-    main()
+    print(f"\nSUCCESS! Video saved to '{output_file}' in {elapsed:.2f} seconds.", flush=True)
+    print("[PROGRESS] 100", flush=True)
 
 # -------------------------------------------------------------
 # Web Studio Integration
@@ -568,56 +576,37 @@ def render_wedding_video_from_template(template_data, clean_video, output_file, 
     with open(tmp_config_path, 'w', encoding='utf-8') as f:
         json.dump(cfg, f, indent=2, ensure_ascii=False)
 
-    shloka_text = cfg.get('scene_4_invitation', {}).get('shloka', '')
-    get_shloka_image(shloka_text)
-
-    cap = cv2.VideoCapture(clean_video)
-    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
-    cap.release()
-
-    chunk_size = (total_frames + num_workers - 1) // num_workers
-    tasks = []
-    for i in range(num_workers):
-        s = i * chunk_size
-        e = min((i + 1) * chunk_size, total_frames)
-        if s < total_frames:
-            tasks.append((i, s, e, tmp_config_path, clean_video))
-
-    print(f"[*] Rendering {total_frames} frames across {len(tasks)} parallel workers with master wedding engine...")
-    with mp.Pool(len(tasks)) as pool:
-        part_files = pool.map(render_worker, tasks)
-
-    concat_list = os.path.join(SCRIPT_DIR, 'tmp_render', 'concat_list.txt')
-    with open(concat_list, 'w') as f:
-        for p in part_files:
-            f.write(f"file '{os.path.abspath(p)}'\n")
+def render_wedding_video_from_template(template_data, clean_video, output_file, num_workers=None, progress_callback=None):
+    cfg = template_to_wedding_config(template_data)
+    tmp_config_path = os.path.join(SCRIPT_DIR, 'tmp_render', 'active_wedding_config.json')
+    os.makedirs(os.path.join(SCRIPT_DIR, 'tmp_render'), exist_ok=True)
+    with open(tmp_config_path, 'w', encoding='utf-8') as f:
+        json.dump(cfg, f, indent=2, ensure_ascii=False)
 
     cmd = [
-        'ffmpeg', '-y',
-        '-f', 'concat', '-safe', '0',
-        '-i', concat_list,
-        '-i', clean_video,
-        '-map', '0:v:0',
-        '-map', '1:a:0?',
-        '-c:v', 'libx264',
-        '-pix_fmt', 'yuv420p',
-        '-preset', 'veryfast',
-        '-crf', '18',
-        '-c:a', 'copy',
-        output_file
+        sys.executable,
+        os.path.join(SCRIPT_DIR, 'render_video.py'),
+        '--config', tmp_config_path,
+        '--clean-video', clean_video,
+        '--output', output_file
     ]
-    subprocess.run(cmd, check=True)
 
-    for p in part_files:
-        if os.path.exists(p):
+    print(f"[*] Dispatching standalone multi-core render subprocess: {' '.join(cmd)}", flush=True)
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+    for line in proc.stdout:
+        line_str = line.strip()
+        print(f"[RENDER_LOG] {line_str}", flush=True)
+        if "[PROGRESS]" in line_str and progress_callback:
             try:
-                os.remove(p)
+                pct = int(line_str.split("[PROGRESS]")[1].strip())
+                progress_callback(pct)
             except Exception:
                 pass
-    if os.path.exists(concat_list):
-        try:
-            os.remove(concat_list)
-        except Exception:
-            pass
+
+    proc.wait()
+    if proc.returncode != 0:
+        raise RuntimeError(f"render_video.py subprocess failed with exit code {proc.returncode}")
     return output_file
+
+if __name__ == '__main__':
+    main()
