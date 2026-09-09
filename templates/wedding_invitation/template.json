@@ -99,18 +99,6 @@
         {
           "align": "center",
           "color": "#2c5e54",
-          "default_value": "Together with their families",
-          "font_size": 38,
-          "id": "s4_header1",
-          "label": "Invitation Header Line 1",
-          "type": "text",
-          "value": "Together with their families",
-          "x_percent": 50,
-          "y_percent": 13.5
-        },
-        {
-          "align": "center",
-          "color": "#2c5e54",
           "default_value": "cordially invite you to celebrate the wedding ceremony of their daughter",
           "font_size": 34,
           "id": "s4_header2",

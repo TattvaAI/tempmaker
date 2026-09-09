@@ -43,25 +43,59 @@ def load_fonts():
         'georgia_bold_52': ImageFont.truetype(os.path.join(FONTS_DIR, 'Georgia Bold.ttf'), 52),
     }
 
-def draw_centered(draw, text, cy, font, fill_rgba, stroke_rgba=None, stroke_width=0, max_width=940):
+def draw_centered(draw, text, cy, font, fill_rgba, stroke_rgba=None, stroke_width=0, max_width=940, line_spacing=None):
     if not text:
         return
-    bbox = draw.textbbox((0, 0), text, font=font)
-    w = bbox[2] - bbox[0]
-    h = bbox[3] - bbox[1]
-    if max_width and w > max_width:
-        scale = max_width / w
-        new_size = max(18, int(font.size * scale))
-        try:
-            font = ImageFont.truetype(font.path, new_size)
-            bbox = draw.textbbox((0, 0), text, font=font)
-            w = bbox[2] - bbox[0]
-            h = bbox[3] - bbox[1]
-        except Exception:
-            pass
-    x = (1080 - w) // 2
-    y = cy - h // 2
-    draw.text((x, y), text, font=font, fill=fill_rgba, stroke_fill=stroke_rgba, stroke_width=stroke_width)
+    lines = [l.strip() for l in str(text).split('\n') if l.strip()]
+    if not lines:
+        return
+
+    cur_font = font
+    if len(lines) == 1:
+        line = lines[0]
+        bbox = draw.textbbox((0, 0), line, font=cur_font)
+        w = bbox[2] - bbox[0]
+        h = bbox[3] - bbox[1]
+        if max_width and w > max_width:
+            scale = max_width / w
+            new_size = max(18, int(cur_font.size * scale))
+            try:
+                cur_font = ImageFont.truetype(cur_font.path, new_size)
+                bbox = draw.textbbox((0, 0), line, font=cur_font)
+                w = bbox[2] - bbox[0]
+                h = bbox[3] - bbox[1]
+            except Exception:
+                pass
+        x = (1080 - w) // 2
+        y = cy - h // 2
+        draw.text((x, y), line, font=cur_font, fill=fill_rgba, stroke_fill=stroke_rgba, stroke_width=stroke_width)
+        return
+
+    # Multiline handling:
+    if max_width:
+        max_line_w = 0
+        for line in lines:
+            bb = draw.textbbox((0, 0), line, font=cur_font)
+            max_line_w = max(max_line_w, bb[2] - bb[0])
+        if max_line_w > max_width:
+            scale = max_width / max_line_w
+            new_size = max(18, int(cur_font.size * scale))
+            try:
+                cur_font = ImageFont.truetype(cur_font.path, new_size)
+            except Exception:
+                pass
+
+    step = line_spacing if line_spacing is not None else int(cur_font.size * 1.25)
+    total_h = (len(lines) - 1) * step
+    start_y = cy - total_h // 2
+
+    for i, line in enumerate(lines):
+        bb = draw.textbbox((0, 0), line, font=cur_font)
+        lw = bb[2] - bb[0]
+        lh = bb[3] - bb[1]
+        lx = (1080 - lw) // 2
+        ly = start_y + i * step - lh // 2
+        draw.text((lx, ly), line, font=cur_font, fill=fill_rgba, stroke_fill=stroke_rgba, stroke_width=stroke_width)
 
 def draw_ornament_divider(draw, cy, color_rgba):
     # Elegant vector divider with diamonds and lines
@@ -115,11 +149,24 @@ def render_frame_text(base_bgr, frame_idx, config, fonts, shloka_img=None):
             r, g, b, a = sh_alpha.split()
             a = a.point(lambda p: int(p * a1 / 255.0))
             sh_alpha.putalpha(a)
-            overlay.paste(sh_alpha, ((1080 - sw) // 2, 160), sh_alpha)
+            overlay.paste(sh_alpha, ((1080 - sw) // 2, 140), sh_alpha)
         else:
-            draw_centered(draw, c4.get('shloka', '॥ श्री गणेशाय नमः ॥'), 180, fonts['rozha_42'], (214, 123, 39, a1))
-        draw_centered(draw, c4.get('header_line1', ''), 255, fonts['georgia_italic_40'], (44, 94, 84, a1))
-        draw_centered(draw, c4.get('header_line2', ''), 305, fonts['georgia_italic_40'], (44, 94, 84, a1), max_width=960)
+            draw_centered(draw, c4.get('shloka', '॥ श्री गणेशाय नमः ॥'), 160, fonts['rozha_42'], (214, 123, 39, a1))
+
+        h1 = (c4.get('header_line1') or '').strip()
+        h2 = (c4.get('header_line2') or '').strip()
+        if h1 and h2:
+            h2_lines = [l for l in h2.split('\n') if l.strip()]
+            if len(h2_lines) > 1:
+                draw_centered(draw, h1, 240, fonts['georgia_italic_40'], (44, 94, 84, a1), max_width=960)
+                draw_centered(draw, h2, 315, fonts['georgia_italic_40'], (44, 94, 84, a1), max_width=960)
+            else:
+                draw_centered(draw, h1, 255, fonts['georgia_italic_40'], (44, 94, 84, a1), max_width=960)
+                draw_centered(draw, h2, 305, fonts['georgia_italic_40'], (44, 94, 84, a1), max_width=960)
+        elif h1:
+            draw_centered(draw, h1, 275, fonts['georgia_italic_40'], (44, 94, 84, a1), max_width=960)
+        elif h2:
+            draw_centered(draw, h2, 280, fonts['georgia_italic_40'], (44, 94, 84, a1), max_width=960)
         
         has_parents = (
             c4.get('bride_parents_line1') or c4.get('groom_parents_line1')
@@ -443,89 +490,91 @@ def template_to_wedding_config(template_data):
         for f in sc.get('fields', []):
             field_map[f['id']] = f.get('value', '')
 
-    if 's2_initials' in field_map:
-        cfg.setdefault('scene_2_monogram', {})['initials'] = field_map['s2_initials']
+    seen_scene_ids = {sc.get('scene_id') for sc in template_data.get('scenes', [])}
 
-    if 's3_names' in field_map:
+    if 'scene_2' in seen_scene_ids or 's2_initials' in field_map:
+        cfg.setdefault('scene_2_monogram', {})['initials'] = field_map.get('s2_initials', '')
+
+    if 'scene_3' in seen_scene_ids or 's3_names' in field_map:
         s3 = cfg.setdefault('scene_3_announcement', {})
-        s3['monogram'] = field_map.get('s3_monogram', s3.get('monogram', 'SM'))
-        s3['couple_names'] = field_map['s3_names']
-        s3['subtext'] = field_map.get('s3_subtext', s3.get('subtext', 'are getting married on ..'))
-        s3['date'] = field_map.get('s3_date', s3.get('date', '21st September 2026'))
+        s3['monogram'] = field_map.get('s3_monogram', '')
+        s3['couple_names'] = field_map.get('s3_names', '')
+        s3['subtext'] = field_map.get('s3_subtext', '')
+        s3['date'] = field_map.get('s3_date', '')
 
-    if 's4_bride' in field_map or 's4_groom' in field_map:
+    if 'scene_4' in seen_scene_ids or 's4_bride' in field_map or 's4_groom' in field_map or 's4_header2' in field_map:
         s4 = cfg.setdefault('scene_4_invitation', {})
-        if 's4_shloka' in field_map: s4['shloka'] = field_map['s4_shloka']
-        if 's4_header1' in field_map: s4['header_line1'] = field_map['s4_header1']
-        if 's4_header2' in field_map: s4['header_line2'] = field_map['s4_header2']
-        if 's4_bride' in field_map: s4['bride_name'] = field_map['s4_bride']
-        if 's4_bride_parents_rel' in field_map: s4['bride_parents_relation'] = field_map['s4_bride_parents_rel']
-        if 's4_bride_parents1' in field_map: s4['bride_parents_line1'] = field_map['s4_bride_parents1']
-        if 's4_bride_parents2' in field_map: s4['bride_parents_line2'] = field_map['s4_bride_parents2']
-        if 's4_with' in field_map: s4['conjunction'] = field_map['s4_with']
-        if 's4_groom' in field_map: s4['groom_name'] = field_map['s4_groom']
-        if 's4_groom_parents_rel' in field_map: s4['groom_parents_relation'] = field_map['s4_groom_parents_rel']
-        if 's4_groom_parents1' in field_map: s4['groom_parents_line1'] = field_map['s4_groom_parents1']
-        if 's4_groom_parents2' in field_map: s4['groom_parents_line2'] = field_map['s4_groom_parents2']
-        if 's4_res_label' in field_map: s4['residence_label'] = field_map['s4_res_label']
-        if 's4_addr1' in field_map: s4['address_line1'] = field_map['s4_addr1']
-        if 's4_addr2' in field_map: s4['address_line2'] = field_map['s4_addr2']
+        s4['shloka'] = field_map.get('s4_shloka', '')
+        s4['header_line1'] = field_map.get('s4_header1', '')
+        s4['header_line2'] = field_map.get('s4_header2', '')
+        s4['bride_name'] = field_map.get('s4_bride', '')
+        s4['bride_parents_relation'] = field_map.get('s4_bride_parents_rel', '')
+        s4['bride_parents_line1'] = field_map.get('s4_bride_parents1', '')
+        s4['bride_parents_line2'] = field_map.get('s4_bride_parents2', '')
+        s4['conjunction'] = field_map.get('s4_with', '')
+        s4['groom_name'] = field_map.get('s4_groom', '')
+        s4['groom_parents_relation'] = field_map.get('s4_groom_parents_rel', '')
+        s4['groom_parents_line1'] = field_map.get('s4_groom_parents1', '')
+        s4['groom_parents_line2'] = field_map.get('s4_groom_parents2', '')
+        s4['residence_label'] = field_map.get('s4_res_label', '')
+        s4['address_line1'] = field_map.get('s4_addr1', '')
+        s4['address_line2'] = field_map.get('s4_addr2', '')
 
-    if 's5_title' in field_map or 's5_date' in field_map:
+    if 'scene_5' in seen_scene_ids or 's5_title' in field_map or 's5_date' in field_map:
         s5 = cfg.setdefault('scene_5_haldi', {})
-        if 's5_header' in field_map: s5['header'] = field_map['s5_header']
-        if 's5_title' in field_map: s5['title'] = field_map['s5_title']
-        if 's5_date' in field_map: s5['date'] = field_map['s5_date']
-        if 's5_time' in field_map: s5['time'] = field_map['s5_time']
-        if 's5_venue_label' in field_map: s5['venue_label'] = field_map['s5_venue_label']
-        if 's5_venue_name' in field_map: s5['venue_name'] = field_map['s5_venue_name']
-        if 's5_addr1' in field_map: s5['address_line1'] = field_map['s5_addr1']
-        if 's5_addr2' in field_map: s5['address_line2'] = field_map['s5_addr2']
+        s5['header'] = field_map.get('s5_header', '')
+        s5['title'] = field_map.get('s5_title', '')
+        s5['date'] = field_map.get('s5_date', '')
+        s5['time'] = field_map.get('s5_time', '')
+        s5['venue_label'] = field_map.get('s5_venue_label', '')
+        s5['venue_name'] = field_map.get('s5_venue_name', '')
+        s5['address_line1'] = field_map.get('s5_addr1', '')
+        s5['address_line2'] = field_map.get('s5_addr2', '')
 
-    if 's6_bride' in field_map or 's6_date' in field_map:
+    if 'scene_6' in seen_scene_ids or 's6_bride' in field_map or 's6_date' in field_map:
         s6 = cfg.setdefault('scene_6_mehendi', {})
-        if 's6_header' in field_map: s6['header'] = field_map['s6_header']
-        if 's6_title' in field_map: s6['title_line1'] = field_map['s6_title']
-        if 's6_bride' in field_map: s6['bride_name'] = field_map['s6_bride']
-        if 's6_date' in field_map: s6['date'] = field_map['s6_date']
-        if 's6_time' in field_map: s6['time'] = field_map['s6_time']
-        if 's6_venue' in field_map: s6['venue_name'] = field_map['s6_venue']
-        if 's6_addr1' in field_map: s6['address_line1'] = field_map['s6_addr1']
-        if 's6_addr2' in field_map: s6['address_line2'] = field_map['s6_addr2']
+        s6['header'] = field_map.get('s6_header', '')
+        s6['title_line1'] = field_map.get('s6_title', '')
+        s6['bride_name'] = field_map.get('s6_bride', '')
+        s6['date'] = field_map.get('s6_date', '')
+        s6['time'] = field_map.get('s6_time', '')
+        s6['venue_name'] = field_map.get('s6_venue', '')
+        s6['address_line1'] = field_map.get('s6_addr1', '')
+        s6['address_line2'] = field_map.get('s6_addr2', '')
 
-    if 's7_hindi' in field_map or 's7_date_time' in field_map:
+    if 'scene_7' in seen_scene_ids or 's7_hindi' in field_map or 's7_date_time' in field_map:
         s7 = cfg.setdefault('scene_7_sangeet', {})
-        if 's7_header1' in field_map: s7['header_line1'] = field_map['s7_header1']
-        if 's7_header2' in field_map: s7['header_line2'] = field_map['s7_header2']
-        if 's7_hindi' in field_map: s7['event_name_hindi'] = field_map['s7_hindi']
-        if 's7_sub' in field_map: s7['sub_header'] = field_map['s7_sub']
-        if 's7_bride' in field_map: s7['bride_name'] = field_map['s7_bride']
-        if 's7_date_time' in field_map: s7['date'] = field_map['s7_date_time']
-        if 's7_venue1' in field_map: s7['venue_label'] = field_map['s7_venue1']
-        if 's7_venue2' in field_map: s7['venue_name'] = field_map['s7_venue2']
+        s7['header_line1'] = field_map.get('s7_header1', '')
+        s7['header_line2'] = field_map.get('s7_header2', '')
+        s7['event_name_hindi'] = field_map.get('s7_hindi', '')
+        s7['sub_header'] = field_map.get('s7_sub', '')
+        s7['bride_name'] = field_map.get('s7_bride', '')
+        s7['date'] = field_map.get('s7_date_time', '')
+        s7['venue_label'] = field_map.get('s7_venue1', '')
+        s7['venue_name'] = field_map.get('s7_venue2', '')
 
-    if 's8_mandha_title' in field_map or 's8_wedding_title' in field_map:
+    if 'scene_8' in seen_scene_ids or 's8_mandha_title' in field_map:
         s8 = cfg.setdefault('scene_8_mandha', {})
-        if 's8_mandha_title' in field_map: s8['title'] = field_map['s8_mandha_title']
-        if 's8_date_header' in field_map: s8['date'] = field_map['s8_date_header']
-        if 's8_mandha_time' in field_map: s8['time'] = field_map['s8_mandha_time']
-        if 's8_mandha_v1' in field_map: s8['venue_name'] = field_map['s8_mandha_v1']
-        if 's8_mandha_v2' in field_map: s8['address'] = field_map['s8_mandha_v2']
+        s8['title'] = field_map.get('s8_mandha_title', '')
+        s8['date'] = field_map.get('s8_date_header', '')
+        s8['time'] = field_map.get('s8_mandha_time', '')
+        s8['venue_name'] = field_map.get('s8_mandha_v1', '')
+        s8['address'] = field_map.get('s8_mandha_v2', '')
 
+    if 'scene_9' in seen_scene_ids or 's8_wedding_title' in field_map:
         s9 = cfg.setdefault('scene_9_wedding', {})
-        if 's8_wedding_title' in field_map: s9['title'] = field_map['s8_wedding_title']
-        if 's9_wedding_date' in field_map: s9['date'] = field_map['s9_wedding_date']
-        elif 's8_date_header' in field_map: s9['date'] = field_map['s8_date_header']
-        if 's8_wedding_time' in field_map: s9['time'] = field_map['s8_wedding_time']
-        if 's8_wedding_v1' in field_map: s9['venue_name'] = field_map['s8_wedding_v1']
-        if 's8_wedding_v2' in field_map: s9['address'] = field_map['s8_wedding_v2']
+        s9['title'] = field_map.get('s8_wedding_title', '')
+        s9['date'] = field_map.get('s9_wedding_date', field_map.get('s8_date_header', ''))
+        s9['time'] = field_map.get('s8_wedding_time', '')
+        s9['venue_name'] = field_map.get('s8_wedding_v1', '')
+        s9['address'] = field_map.get('s8_wedding_v2', '')
 
-    if 's9_title' in field_map or 's9_date' in field_map or 's10_rsvp_label' in field_map:
+    if 'scene_10' in seen_scene_ids or 's9_title' in field_map or 's10_rsvp_label' in field_map:
         s10 = cfg.setdefault('scene_10_closing', {})
-        if 's9_title' in field_map: s10['title'] = field_map['s9_title']
-        if 's9_date' in field_map: s10['date'] = field_map['s9_date']
-        if 's10_rsvp_label' in field_map: s10['rsvp_label'] = field_map['s10_rsvp_label']
-        if 's10_rsvp_text' in field_map: s10['rsvp_text'] = field_map['s10_rsvp_text']
+        s10['title'] = field_map.get('s9_title', '')
+        s10['date'] = field_map.get('s9_date', '')
+        s10['rsvp_label'] = field_map.get('s10_rsvp_label', '')
+        s10['rsvp_text'] = field_map.get('s10_rsvp_text', '')
 
     return cfg
 
@@ -565,16 +614,6 @@ def render_wedding_frame(base_bgr, frame_idx, template_data):
     shloka_text = cfg.get('scene_4_invitation', {}).get('shloka', '')
     shloka_img = get_shloka_image(shloka_text)
     return render_frame_text(base_bgr, frame_idx, cfg, fonts, shloka_img=shloka_img)
-
-def render_wedding_video_from_template(template_data, clean_video, output_file, num_workers=None):
-    if num_workers is None:
-        num_workers = min(8, mp.cpu_count() or 4)
-
-    cfg = template_to_wedding_config(template_data)
-    tmp_config_path = os.path.join(SCRIPT_DIR, 'tmp_render', 'active_wedding_config.json')
-    os.makedirs(os.path.join(SCRIPT_DIR, 'tmp_render'), exist_ok=True)
-    with open(tmp_config_path, 'w', encoding='utf-8') as f:
-        json.dump(cfg, f, indent=2, ensure_ascii=False)
 
 def render_wedding_video_from_template(template_data, clean_video, output_file, num_workers=None, progress_callback=None):
     cfg = template_to_wedding_config(template_data)
