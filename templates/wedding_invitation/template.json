@@ -104,7 +104,7 @@
           "id": "s4_header2",
           "label": "Invitation Header Line 2",
           "type": "text",
-          "value": "cordially invite you to celebrate the\nwedding ceremony of their daughter",
+          "value": "We cordially invite you to \ncelebrate the wedding ceremony of",
           "x_percent": 50,
           "y_percent": 16.5
         },
@@ -624,73 +624,7 @@
       "start_frame": 1270
     },
     {
-      "end_frame": 1619,
-      "fields": [
-        {
-          "align": "center",
-          "color": "#a41e56",
-          "font_size": 105,
-          "id": "s8_wedding_title",
-          "label": "Wedding Ceremony Title",
-          "type": "title",
-          "value": "Wedding Ceremony",
-          "x_percent": 50,
-          "y_percent": 26
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 38,
-          "id": "s9_wedding_date",
-          "label": "Wedding Date",
-          "type": "date",
-          "value": "Monday, 21 September 2026",
-          "x_percent": 50,
-          "y_percent": 34.9
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 38,
-          "id": "s8_wedding_time",
-          "label": "Wedding Time",
-          "type": "time",
-          "value": "7:00 PM Onwards",
-          "x_percent": 50,
-          "y_percent": 41.1
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 46,
-          "id": "s8_wedding_v1",
-          "label": "Wedding Venue Name",
-          "type": "venue",
-          "value": "The Divine",
-          "x_percent": 50,
-          "y_percent": 51.6
-        },
-        {
-          "align": "center",
-          "color": "#2b442a",
-          "font_size": 36,
-          "id": "s8_wedding_v2",
-          "label": "Wedding Venue Address",
-          "type": "venue",
-          "value": "Meerut Road, Karnal, Haryana-132001",
-          "x_percent": 50,
-          "y_percent": 55
-        }
-      ],
-      "name": "Scene 9: Wedding Ceremony",
-      "preview_frame": 1530,
-      "preview_path": "preview_frames/scene_9.jpg",
-      "scene_id": "scene_9",
-      "scene_num": 9,
-      "start_frame": 1464
-    },
-    {
-      "end_frame": 1755,
+      "end_frame": 1563,
       "fields": [
         {
           "align": "center",
@@ -737,24 +671,24 @@
           "y_percent": 51.2
         }
       ],
-      "name": "Scene 10: Closing & RSVP",
-      "preview_frame": 1700,
-      "preview_path": "preview_frames/scene_10.jpg",
-      "scene_id": "scene_10",
-      "scene_num": 10,
-      "start_frame": 1649
+      "name": "Scene 9: Closing & RSVP",
+      "preview_frame": 1506,
+      "preview_path": "preview_frames/scene_9.jpg",
+      "scene_id": "scene_9",
+      "scene_num": 9,
+      "start_frame": 1455
     }
   ],
   "source_video": "A1.mp4",
   "template_id": "wedding_invitation",
   "thumbnail": "/api/templates/wedding_invitation/preview_frame/scene2.jpg",
   "title": "Royal Indian Wedding Invitation (Muskan & Shubham)",
-  "total_fields": 58,
+  "total_fields": 52,
   "video_info": {
-    "duration_sec": 58.57,
+    "duration_sec": 52.1,
     "fps": 30,
     "height": 1920,
-    "total_frames": 1757,
+    "total_frames": 1563,
     "width": 1080
   }
 }

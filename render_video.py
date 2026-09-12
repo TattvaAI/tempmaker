@@ -287,29 +287,10 @@ def render_frame_text(base_bgr, frame_idx, config, fonts, shloka_img=None):
         if addr:
             draw_centered(draw, addr, 1055, fonts['georgia_36'], green, max_width=920)
 
-    # Scene 9 (Wedding Ceremony: frames 1464..1619)
-    elif 1464 <= frame_idx < 1619:
-        c9 = config.get('scene_9_wedding') or config.get('scene_8_wedding', {})
-        a9 = int(min(1.0, max(0.0, (frame_idx - 1464) / 25.0)) * 255)
-        green = (43, 68, 42, a9)
-        red = (164, 30, 86, a9)
-        draw_centered(draw, c9.get('title', 'Wedding Ceremony'), 500, fonts['greatvibes_120'], red, stroke_rgba=(255, 255, 255, a9), stroke_width=2)
-        if c9.get('on_text'):
-            draw_centered(draw, c9['on_text'], 600, fonts['georgia_italic_40'], green)
-        draw_centered(draw, c9.get('date', 'Monday, 21 September 2026'), 670, fonts['georgia_bold_38'], green)
-        draw_ornament_divider(draw, 730, green)
-        draw_centered(draw, c9.get('time', '7:00 PM Onwards'), 790, fonts['georgia_bold_italic_46'], green)
-        draw_ornament_divider(draw, 850, green)
-        draw_centered(draw, c9.get('venue_label', 'Venue:'), 910, fonts['greatvibes_95'], red, stroke_rgba=(255, 255, 255, a9), stroke_width=1)
-        draw_centered(draw, c9.get('venue_name', 'The Divine'), 990, fonts['georgia_bold_italic_46'], green, max_width=920)
-        addr = c9.get('address') or c9.get('address_line1') or ''
-        if addr:
-            draw_centered(draw, addr, 1055, fonts['georgia_36'], green, max_width=920)
-
-    # Scene 10 (Save the Date + RSVP: frames 1649..1755)
-    elif 1649 <= frame_idx < 1755:
+    # Scene 9 (Save the Date + RSVP: frames 1455..1563)
+    elif 1455 <= frame_idx < 1563:
         c10 = config.get('scene_10_closing') or config.get('scene_9_closing', {})
-        a10 = int(min(1.0, max(0.0, (frame_idx - 1649) / 25.0)) * 255)
+        a10 = int(min(1.0, max(0.0, (frame_idx - 1455) / 25.0)) * 255)
         blue = (19, 75, 142, a10)
         maroon = (164, 30, 86, a10)
         green = (43, 68, 42, a10)
@@ -561,15 +542,7 @@ def template_to_wedding_config(template_data):
         s8['venue_name'] = field_map.get('s8_mandha_v1', '')
         s8['address'] = field_map.get('s8_mandha_v2', '')
 
-    if 'scene_9' in seen_scene_ids or 's8_wedding_title' in field_map:
-        s9 = cfg.setdefault('scene_9_wedding', {})
-        s9['title'] = field_map.get('s8_wedding_title', '')
-        s9['date'] = field_map.get('s9_wedding_date', field_map.get('s8_date_header', ''))
-        s9['time'] = field_map.get('s8_wedding_time', '')
-        s9['venue_name'] = field_map.get('s8_wedding_v1', '')
-        s9['address'] = field_map.get('s8_wedding_v2', '')
-
-    if 'scene_10' in seen_scene_ids or 's9_title' in field_map or 's10_rsvp_label' in field_map:
+    if 'scene_9' in seen_scene_ids or 'scene_10' in seen_scene_ids or 's9_title' in field_map or 's10_rsvp_label' in field_map:
         s10 = cfg.setdefault('scene_10_closing', {})
         s10['title'] = field_map.get('s9_title', '')
         s10['date'] = field_map.get('s9_date', '')
